@@ -1,0 +1,40 @@
+
+title: LVM
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>reiserfs partition vergr&#246;ssern</h2>
+ lvextend /dev/vg/opt --size +1M && resize_reiserfs /dev/vg/opt<br/>
+
+<h2>root-partiton auf lvm</h2>
+<br/>
+dazu muss ein kernel mit initramfs/initrd unterst&#252;tzung auf eine /boot Partition gelegt werden.<br/>
+mit "genkernel" kann man ein initrd Image erstellen:<br/>
+ genkernel --lvm2 initrd<br/>
+
+Und dann muss noch ein symbolischer link auf das erstelle Initrd-Image gemacht werden, damit die grub-Konfiguration leichter f&#228;llt.<br/>
+ cd /boot<br/>
+ ln -s initramfs-genkernel-{version} initramfs<br/>
+
+<br/>
+In /boot/grub/menu.lst mu&#223; man dann folgendes eintragen (hd0 ist die /boot-Parition). Dabei ist wichtig den paramter dolvm2 anzugeben, sonst wird die lvm2 unterst&#252;tzung in diesem (speziellen) Initrd-Image nicht aktiviert.<br/>
+
+ title Gentoo<br/>
+ kernel (hd0,0)/bzImage real_root=/dev/vg/gentoo dolvm2 quiet<br/>
+ initrd (hd0,0)/initramfs<br/>
+
+Die Vorteile dabei sind, dass durch das lvm einfach ein snapshot erstellt werden kann, die Daten w&#228;hrend des Betriebes auf eine andere festplatte verschoben werden kann uvm.<br/>
+Nachteil ist, dass man ein (funktionierendes) initrd-image ben&#246;tigt, was ein evtl. rekonstruieren des bootens etwas schwieriger macht. Da aber inzwischen fast jede Live-CD lvm kann, sollte dies kein Problem darstellen.<br/>
+
+<h2>Links</h2>
+<br/>
+<a href="http://gentoo-wiki.com/HOWTO_Install_Gentoo_on_an_LVM2_root_partition HOWTO Install Gentoo on an LVM2 root">partition</a>
+
+{% endfilter %}
+{% endblock %}

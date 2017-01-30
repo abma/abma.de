@@ -1,0 +1,89 @@
+
+title: ShellDaemon
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Fork a shell script</h2>
+<br/>
+dieses kleine programm startet ein shellscript im hintergrund. gut f&#252;r faule die auf  >/dev/null ... & keine lust haben :-)<br/>
+
+daemon.c:<br/>
+ /*<br/>
+  *<br/>
+<ul class="mediawiki">
+<li> daemon.c written by matthias at abma.de</li>
+</ul>
+  *<br/>
+  *<br/>
+<ul class="mediawiki">
+<li>/</li>
+</ul>
+<ol class="mediawiki">
+<li>include <stdio.h></li>
+<li>include <stdlib.h></li>
+<li>include <sys/types.h></li>
+<li>include <sys/fcntl.h></li>
+<li>include <unistd.h></li>
+<li>include <string.h></li>
+<li>include <errno.h></li>
+</ol>
+ <br/>
+ const int STD[]={STDIN_FILENO,<br/>
+                 STDOUT_FILENO,<br/>
+                 STDERR_FILENO};<br/>
+ <br/>
+ /*Fork and then start a shell script*/<br/>
+ int main(int argc,char*argv[]){<br/>
+         int i,res;<br/>
+         FILE *f[2];<br/>
+         if (argc<3){<br/>
+                 printf("usage: %s script logfile [params]\n",argv[0]);<br/>
+                 printf("script: executable in current directory or absolute name");<br/>
+                 printf("logfile: filename where output is appended");<br/>
+                 printf("params: script is startet with this params");<br/>
+                 return 0;<br/>
+         }else{<br/>
+                 printf("Trying to start \"%s\",logging to \"%s\"\n",argv[1],argv[2]);<br/>
+         }<br/>
+         res=fork();<br/>
+         switch(res){<br/>
+                 case 0:{<br/>
+                         setsid();<br/>
+                         /*remap stdin,stdout,stderr to logfile*/<br/>
+                         for(i=0;i<2;i++){<br/>
+                                 f[i]=fdopen(STD[i],"a+");<br/>
+                                 freopen(argv[2],"a+",f[i]);<br/>
+                         }<br/>
+                         printf("Starting %s\n",argv[1]);<br/>
+                         /*Starting shell script*/<br/>
+                         if (execve(argv[1],&argv[2],NULL)<0){<br/>
+                                 char*err;<br/>
+                                 err=strerror(errno);<br/>
+                                 printf("Error when running \"%s\": %s \n",argv[1],err);<br/>
+                         }<br/>
+                         for(i=0;i<2;i++){<br/>
+                                 close((int)f[i]);<br/>
+                         }<br/>
+                         return 0;<br/>
+                 }<br/>
+                 case -1:<br/>
+                         printf("Error forking\n");<br/>
+                         break;<br/>
+                 default:<br/>
+                         break;<br/>
+         }<br/>
+         return 0;<br/>
+ <br/>
+ }<br/>
+
+<br/>
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

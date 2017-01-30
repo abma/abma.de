@@ -1,0 +1,15 @@
+
+title: a php - filemanager
+author: abma
+date: 10-01-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>screenshot phpfilemanager is a simple online filemanager to browse/edit/modify/upload/download files from your computer to a webserver. It is very small and fast. (it has only ~4 KB). Installation is very simple, only extract to a php4 (i don't know if it works with php3) enabled webdirectory and then start with &quot;http://server/directory/index.html&quot;. currently there is no config. Warning! If you don't secure the directory where phpfilemanager (by .htaccess for example) is installed, anyone could edit/view/upload/delete files!! download news * 9.5.2005 added warning to website because of careless people * 6.2.2003 fixed bug in download.php (filename was send wrong to browser) * 25.1.2003 fixed some bugs * 23.1.2003 added first version feedback is welcome! contact: matthias at abma dot de</p>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,18 @@
+
+title: psyslog unter gpl veröffentlicht
+author: abma
+date: 22-04-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Ich habe das Freizeitprojekt "<a href="http://sourceforge.net/projects/psyslog/">pluggable syslogger</a>" unter der GPL veröffentlicht. Das besondere an psyslog ist die Modularität, es gibt Ein- und Ausgabeplugins. Der Vorteil ist, dass sich relativ einfach weitere Plugins schreiben lassen, die z.B. snmp-traps, net-send Nachrichten oder ähnliches dem Syslog näher bringen.
+Im Moment  gibt es nur die Eingabeplugins für den Syslog und Kernel und die Ausgabeplugins für Dateien und einen Mysql Server. Das Dateiausgabeplugin unterstützt automatisches rotieren der Dateien, d.h. die Festplatte sollte nie vollaufen wie dies etwa der Fall bei syslog-ng sein kann, wenn logrotate nicht richtig konfiguriert ist oder einfach zu viele Meldungen eintreffen.
+
+Happy Testing :-)
+
+{% endfilter %}
+{% endblock %}

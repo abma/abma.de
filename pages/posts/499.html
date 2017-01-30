@@ -1,0 +1,32 @@
+
+title: problems with ntlm_auth --require-membership-of= in apache
+author: abma
+date: 12-12-2016
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+I had several issues setting up NTLM auth for apache using ntlm_auth and got errors like these:
+
+      Could not parse 'DOMAINgroup into separate domain/name parts!
+      Winbindd lookupname failed to resolve 'DOMAIN\group into a SID!
+
+in apache config i used this config strings:
+
+      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\group'"
+      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\\\\group'"
+
+The only problem was/is escaping, this config worked for me:
+
+      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of=DOMAIN\\\\group"
+
+
+Note: no single quotes arround the group and 4 backslashes!
+
+As workarround the SID could be used, but that makes the config really unreadable. :)
+
+{% endfilter %}
+{% endblock %}

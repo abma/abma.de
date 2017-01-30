@@ -1,0 +1,49 @@
+
+title: Ngrep
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Ngrep Examples</h2>
+<br/>
+show all UDP packets<br/>
+ ngrep "" udp<br/>
+show all ICMP packets<br/>
+ ngrep "" icmp <br/>
+show TCP or UDP port 53 packets<br/>
+ ngrep "" port 53 <br/>
+show TCP port 23 packets<br/>
+ ngrep "" tcp port 23 <br/>
+listen on eth1<br/>
+ ngrep -d eth1 ""<br/>
+show Microsoft browsing traffic for NT domain MS HOME<br/>
+ ngrep "MS HOME" port 138 <br/>
+show mail traffic<br/>
+ ngrep -iq "rcpt to|mail from" tcp port 25<br/>
+show POP3 traffic<br/>
+ ngrep "user" port 110<br/>
+Microsoft Windows fill the ICMP data with the alphabet; is the pinged host running Windows?<br/>
+ ngrep -q "abcd" icmp<br/>
+show user agents from http traffic<br/>
+ ngrep -iq "user-agent" tcp port 80<br/>
+show version of FTP server<br/>
+ ngrep "220" port 21<br/>
+show ssh traffic<br/>
+ ngrep "SSH" port 22<br/>
+show all traffic expect ssh<br/>
+ ngrep -v "" port 22<br/>
+
+<br/>
+
+<h2>Links</h2>
+<ul class="mediawiki">
+<li>http://ngrep.sourceforge.net/ Homepage of ngrep</li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

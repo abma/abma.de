@@ -1,0 +1,15 @@
+
+title: Anonym im Internet?
+author: abma
+date: 23-02-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Wer glaub anonym im Internet unterwegs zu sein sollte sich mal den Artikel <a href="http://www.golem.de/1002/73299.html">&quot;Panopticlick: EFF studiert Browserspuren im Internet&quot;</a> bei golem.de durchlesen.</p><p>Durch die Browserkennung und die installieren Plugins lässt sich ein Benutzer doch meist sehr eindeutig identifizieren. Selbst die Plugins <a href="https://addons.mozilla.org/de/firefox/addon/1865/">Adblock</a> und <a href="https://addons.mozilla.org/de/firefox/addon/722/">Noscript</a> (die man aus Gründen der Sicherheit sowieso installieren sollte) für Firefox helfen nur bedingt, da Noscript leider nicht ganz einfach zu konfigurieren ist und die Browserkennung sich auch nur schwer anonymisieren lässt.</p><p>Auf der Webseite Panopticlick von der EFF kann man sich selbst ein Bild davon machen, welche Informationen der Browser auch ohne Cookies schon von sich Preis gibt. Dabei ist aber noch zu beachten, dass die Webseite die IP-Adresse nicht berücksichtigt welche noch weite Informationen liefert.</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+
+{% endfilter %}
+{% endblock %}

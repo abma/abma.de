@@ -1,0 +1,19 @@
+
+title: Ton in Video zu leise?
+author: abma
+date: 14-09-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Der <a href="http://www.mplayerhq.hu">mplayer</a> kann per Software den ton verstärken, einfach das video mit:
+
+<blockquote>mplayer -af volume=10 *.avi</blockquote>
+
+starten und der Ton ist 10db lauter! :)
+
+{% endfilter %}
+{% endblock %}

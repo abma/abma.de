@@ -1,0 +1,31 @@
+
+title: projects
+author: abma
+date: 06-01-2011
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+All things you can download from this site are free for private usage, if you want use it for a commercial project, please contact matthias at abma dot de. List of projects 
+
+*Note*: This list is incomplete.
+
+###active projects
+
+ *  [agai](http://abma.de/projects/agai) - a Skrimish AI for the Spring Game Engine
+
+###finished projects
+
+*  [Fastchat](https://abma.de/projects/fastchat) Simple UDP-Chat
+*  [cdimgbrowser](https://abma.de/projects/cdimgbrowse) a simple image viewer
+*  [reminder](https://abma.de/projects/reminder) - a simple console birthday reminder written in C
+*  [gexifrotate](https://abma.de/projects/gexifrotate) - a tool to set the orientation flag of jpegs
+*  [phpfilemanager](https://abma.de/projects/php-filemanager) Filemanager written in PHP
+
+Warranty and Liability The content of this website can be used free of charge with no warranty or liability Since the content is free of charge there is no warranty or liability of any kind. The entire risk of using the content is within you. Should the content prove faulty, inaccurate, or otherwise unacceptable, you assume the cost of all necessary repair of corrections.
+
+{% endfilter %}
+{% endblock %}

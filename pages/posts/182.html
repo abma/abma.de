@@ -1,0 +1,36 @@
+
+title: Fehler Eventid 5719 von Quelle Netlogon
+author: abma
+date: 16-01-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Die Fehlermeldung dazu ist:
+
+"Es steht kein Domänencontroller für die Domäne <domainname> aus folgendem Grund zur Verfügung: 
+Es sind momentan keine Anmeldeserver zum Verarbeiten der Anmeldeanforderung verfügbar. . 
+Stellen Sie sicher, dass der Computer mit dem Netzwerk verbunden ist, und versuchen Sie es erneut. Wenden Sie sich an den Domänenadministrator, wenn das Problem weiterhin besteht."
+
+Einfach einen Eintrag in der Registry dort hinzufügen:
+
+HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Tcpip\Parameters
+DisableDHCPMediaSense mit dem REG_DWORD 1
+
+
+Beschreibung: Dieser Parameter steuert das Verhalten der Funktion DHCP Media
+Sense. Wenn Sie diesen Wert auf 1 setzen, ignorieren DHCP- und
+Nicht-DHCP-Clients Media Sense-Ereignisse von der Schnittstelle.
+Standardmäßig veranlassen Media Sense-Ereignisse den DHCP-Client, eine
+bestimmte Maßnahme zu ergreifen; zum Beispiel versucht er, eine Lease zu
+erhalten (wenn ein Verbindungsereignis eintritt) oder die Schnittstelle und
+die Routen ungültig zu machen (wenn ein Trennungsereignis eintritt).
+
+
+Problem war der Treiber der GBIT-Netzwerkkarte. Autosensing ausschalten könnte auch helfen.
+
+{% endfilter %}
+{% endblock %}

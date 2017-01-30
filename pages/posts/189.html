@@ -1,0 +1,21 @@
+
+title: Alte Dateien löschen
+author: abma
+date: 04-08-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Um alte Dateien anzuzeigen die älter als 14 tage sind, kann man find verwenden:
+
+<code>
+find . -mtime +14 -type f -exec ls -l {} \;
+</code>
+
+"ls -l" natürlich dann durch rm oder ähnliches ersetzen.
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,21 @@
+
+title: Bincimap
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Generate SSL-Certificate for bincimap</h2>
+<br/>
+ openssl req -newkey rsa:1024 -keyout key.tmp -nodes -x509 -days 365 \<br/>
+ -out cert.tmp && cat key.tmp > bincimap.pem && echo >> bincimap.pem && \<br/>
+ cat cert.tmp >> bincimap.pem && rm key.tmp cert.tmp<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

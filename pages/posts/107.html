@@ -1,0 +1,15 @@
+
+title: Windows Registry "offline" ändern
+author: abma
+date: 01-08-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Windows ist mal wieder kaputt und die Registry muss geändert werden?</p><p>Dann kann man mit dem Linux-Tool <a href="http://home.eunet.no/~pnordahl/ntpasswd/">chntpw</a> die Registry ändern. chntpw kann außerdem das Administratorpasswort zurücksetzen. Das Tool befindet sich z.B. auf der Live-CD von <a href="http://grml.org/">GRML</a>.</p><p>Alternativ kann man auch eine andere windows installation starten und mit regedit und dann im Menü &quot;Load Hive&quot; die vorhande registry bearbeiten (z.B. die datei c:\windows\system32\config\system von dem alten Rechner).</p><p>Sinnvoll, wenn man z.B. eine alte Windowsinstallation auf einen neuen Rechner umziehen will (in meinem fall ein VM), die jedoch einen anderen IDE-Controller hat als der vorherige Rechner. (<a href="http://blog.mcbachmann.de/linux/windows-bluescreen-0x0000007b-inaccessible_boot_device">Bluescreen STOP 0x0000007B Inaccessible_Boot_Device</a>).  Mit suchen und ersetzen kann man dann .reg Dateien ändern und in den temporären Pfad importieren.</p>
+
+{% endfilter %}
+{% endblock %}

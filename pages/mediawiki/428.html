@@ -1,0 +1,56 @@
+
+title: Windows/InternetExplorer
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Autoconfiguration</h2>
+<br/>
+<a href="/">Squid</a>
+<br/>
+<h2>Standard Browser &#228;ndern</h2>
+Siehe <a href="/">Registry</a>
+<br/>
+<h2>User Agent &#228;ndern</h2>
+<br/>
+Standard ist<br/>
+
+ Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)<br/>
+
+Which means Internet Explorer 5.5 running on Windows 2000. <br/>
+Open<br/>
+ [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\5.0\User Agent]<br/>
+with regedit.<br/>
+
+Create three new string values called "Compatible", "Version" and "Platform". Set them to equal what you would like to be displayed instead of "compatible", "MSIE 5.5" and "Windows NT 5.0" respectively in the example above.<br/>
+
+Changing the Branded User Agent String<br/>
+In addition when a customized user agent string is used it may contain additional information set by the company that created a branded version of the browser. For example a branded version from an ISP may look like:<br/>
+
+ Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; Your_ISP_Name)<br/>
+
+Since this information is sent to the remote web server it may be stored in the web server log files and therefore possibly used to track branded versions of a web browser.<br/>
+
+To change it open your registry and find the key<br/>
+ [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\User Agent\Post Platform].<br/>
+
+Each value name listed in this key will be sent to the remote web server as an additional entry in the user agent string. To remove any additional information delete the values within the [Post Platform] key. To add additional entries create a string value and name it the string you want to be sent.<br/>
+
+Restart Internet Explorer for the changes to take effect.<br/>
+
+<br/>
+<h2>Inhaltsratgeber vergessenes Passwort zur&#252;cksetzen</h2>
+unter<br/>
+ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\Ratings<br/>
+
+ Ratings<br/>
+l&#246;schen<br/>
+<a href="/">Kategorie:Windows</a>
+
+{% endfilter %}
+{% endblock %}

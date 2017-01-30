@@ -1,0 +1,31 @@
+
+title: automatische Snapshots mit LVM2
+author: abma
+date: 11-06-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+/etc/cron.weekly/lvmsnapshot:
+<blockquote>
+#!/bin/sh
+
+lvremove /dev/vg/snap-old-gentoo-1 --force
+lvremove /dev/vg/snap-old-home-1 --force
+
+lvrename /dev/vg/snap-current-home snap-old-home-1
+lvrename /dev/vg/snap-current-gentoo snap-old-gentoo-1
+
+lvcreate -L 250M --snapshot -p r -n snap-current-home /dev/vg/home
+lvcreate -L 300M --snapshot -p r -n snap-current-gentoo /dev/vg/gentoo
+</blockquote>
+
+Das script löscht die alten Snapshots, benennt die aktuellen Snapshots um und erstellt neue Snapshots. Die Anzahl an Snapshots könnte noch erhöht werden, deswegen der Suffix -1.
+
+Wobei dazugesagt werden sollte, dafür sind die snapshots eigentlich nicht gedacht. Die Performance geht ziemlich in den Keller, man sollte einen snapshot erstellen, und dann z.B. mit einem dd die snapshot partition sichern und dann den snapshot wieder löschen.
+
+{% endfilter %}
+{% endblock %}

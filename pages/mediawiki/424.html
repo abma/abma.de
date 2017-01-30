@@ -1,0 +1,18 @@
+
+title: Windows/AcrobatReader
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>File History l&#246;schen</h2>
+einfach den Schl&#252;ssel (f&#252;r Version 5.0)<br/>
+ HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\5.0\AVGeneral\cRecentFiles<br/>
+l&#246;schen. Dies kann n&#246;tig sein, wenn der Reader ewig zum starten braucht, das kann daran liegen, wenn eine Datei ge&#246;ffnet wurde, die auf einem Netzlaufwerk liegt, und dieser Server ist nicht mehr verf&#252;gbar.
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,30 @@
+
+title: Gentoo:Portage
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Packete maskieren</h2>
+z.B.<br/>
+ echo "<=media-tv/xawtv-3.86">>/etc/portage/package.mask<br/>
+(alle kleiner Version 3.86 ignorieren)<br/>
+oder<br/>
+ echo "=media-tv/xawtv-3.86">>/etc/portage/package.mask<br/>
+(Version 3.86 ignorieren)<br/>
+
+<br/>
+<h2>Abh&#228;ngigkeiten anzeigen</h2>
+ emerge --tree --pretend packetname<br/>
+
+<h2>Wo werden bin&#228;re pakete gespeichert?</h2>
+ /usr/portage/packages<br/>
+
+<a href="/">Kategorie:Windows</a>
+
+{% endfilter %}
+{% endblock %}

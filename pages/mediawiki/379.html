@@ -1,0 +1,15 @@
+
+title: OpenSwan
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Howto: OpenSwan konfigurieren</h2><p>konfiguration überprüfen:<br />  ipsec verify<br />  ipsec.secrets erstellen:<br />  ipsec newhostkey --output /etc/ipsec/ipsec.secrets --bits 2048<br />  soll der windows-vpn-pptp-client verwendet werden (tcp-port 1723) dann muss als server <a href="/">poptop</a> verwendet werden.<br />  ein howto für <a href="/">l2tpd</a> gibts hier http://www.natecarlson.com/2007/07/30/configuring-an-ipsec-tunnel-between-openswan-and-windows-2000-xp/</p><h2>Error in configfile</h2> <p><br /> check for tabs, they are a have to!</p><h2>links</h2> <ul class="mediawiki"> <li>http://www.gentoo-wiki.info/HOWTO_OpenSwan_2.6_kernel</li> </ul>
+
+{% endfilter %}
+{% endblock %}

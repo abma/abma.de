@@ -1,0 +1,15 @@
+
+title: GPG schlüssel für apt importieren
+author: abma
+date: 18-05-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Bei folgender Fehlermeldung:</p><blockquote><p><code>W: GPG error: http://ppa.launchpad.net jaunty Release: Die folgenden Signaturen konnten nicht überprüft werden, weil ihr öffentlicher Schlüssel nicht verfügbar ist: NO_PUBKEY FC66403D8670A035</code></p></blockquote><p>fehlt der öffentliche Schlüssel, dieser kann importiert werden, indem man den Schlüssel vom &quot;Keyserver&quot; importiert. Zuerst den Schlüssel herunterladen (dazu muss man die letzten 8 Hex-Zeichen angeben):  <code> </code></p><blockquote><p><code>gpg --keyserver keyserver.ubuntu.com --recv 8670A035 </code></p></blockquote><p>und dann der Paketverwaltung bekannt machen:</p><blockquote><p><code>gpg --export --armor 8670A035 | sudo apt-key add - </code></p></blockquote>
+
+{% endfilter %}
+{% endblock %}

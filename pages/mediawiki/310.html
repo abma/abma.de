@@ -1,0 +1,27 @@
+
+title: Ackermannfunktion
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Ackermannfunktion in c</h2>
+Super geeignet um sinnlos Rechenzeit zu verbraten:<br/>
+
+ int ackermann(int m,int n){<br/>
+        if(m == 0)<br/>
+                return n + 1;<br/>
+        else if (n == 0)<br/>
+                return ackermann(m - 1, 1);<br/>
+        else<br/>
+                return ackermann(m - 1, ackermann(m, n - 1));<br/>
+ }<br/>
+
+Siehe auch <a href="http://de.wikipedia.org/wiki/Ackermannfunktion">Wikipedia</a>
+
+{% endfilter %}
+{% endblock %}

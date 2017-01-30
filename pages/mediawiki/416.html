@@ -1,0 +1,30 @@
+
+title: Vim
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Convert Text from Unix/Dos to Dos/Unix file</h2>
+Use the command in vim:<br/>
+<dl class="mediawiki">
+<dd>set ff=unix  //to unix file</dd>
+<dd>set ff=dos   //to windows file</dd>
+<br/>
+</dl>
+<br/>
+<h2>Einf&#252;gemodus aktivieren</h2>
+hilfreich wenns die tabs immer zerfleddert:<br/>
+<dl class="mediawiki">
+<dd>set paste</dd>
+</dl>
+eingeben<br/>
+
+<a href="/">Category:Linux</a>
+
+{% endfilter %}
+{% endblock %}

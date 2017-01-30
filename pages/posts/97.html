@@ -1,0 +1,17 @@
+
+title: rsync über ssh
+author: abma
+date: 01-06-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Ein Verzeichnis spiegeln? Rsync hilft:
+<blockquote>$ rsync -avz -e ssh remoteuser@remotehost:/source/dir /target/dir</blockquote>
+:-)
+
+{% endfilter %}
+{% endblock %}

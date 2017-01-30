@@ -1,0 +1,198 @@
+
+title: Gdb
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Quelle: http://krtkg1.rug.ac.be/~colle/C/crash_course_gdb.html<br/>
+
+This page is made available for everyone who wants to read it. It's designed for people who want to make their first steps in gdb.<br/>
+What is gdb and where do I get it<br/>
+gdb is GNU's debugger and can be found on many gnu-sites, like prep.mit.ai.edu. I suggest you try to use archie to find a ftp-site which is closer to your place.<br/>
+The debug process<br/>
+The debugprocess involves the following steps:<br/>
+
+<h2>An example</h2>
+Suppose we want to debug the following small c-program (file.c):<br/>
+
+<ol class="mediawiki">
+<li>include <stdio.h></li>
+</ol>
+ <br/>
+ int main()<br/>
+ {<br/>
+   char *string="Hello world!\n";<br/>
+ <br/>
+   if (string = NULL) {<br/>
+     printf("string is NULL\n");<br/>
+     exit(1);<br/>
+   }<br/>
+   puts(string);<br/>
+ }<br/>
+
+<h2>Recompilation</h2>
+When you want to use a debugger, then you have to include debug information in your executable. This is done by using the -g switch when compiling with gcc or cc. You will use a command similar to<br/>
+
+ colle@krtkg1> cc -g -o executable file.c<br/>
+
+when you want to compile file.c into the executable executable.<br/>
+
+If you are using a Makefile, then you should edit the Makefile and add -g to the CFLAGS-variable. Delete all the objectfiles (files ending in .o), with<br/>
+
+ colle@krtkg1> make clean<br/>
+
+or<br/>
+
+ colle@krtkg1> rm *.o<br/>
+
+After cleaning up all the objectfiles, you can rebuild the executable with a command similar to<br/>
+
+ colle@krtkg1> make<br/>
+ cc -g -o executable file.c<br/>
+
+<h2>Starting gdb</h2>
+After you included debug symbols in your executable you are ready to launch gdb. When you want to debug executable you will start gdb with a command similar to<br/>
+
+ colle@krtkg1> gdb executable<br/>
+ GDB is free software and you are welcome to distribute copies of it<br/>
+ under certain conditions; type "show copying" to see the conditions.<br/>
+ There is absolutely no warranty for GDB; type "show warranty" for details.<br/>
+ GDB 4.15.1 (alpha-dec-osf3.2), Copyright 1995 Free Software Foundation, Inc...<br/>
+ (gdb)<br/>
+
+When you see the following message<br/>
+
+ Reading symbols from executable...(no debugging symbols found)...done<br/>
+
+then you forgot to use the -g switch while compiling, and you should read the previous paragraph!<br/>
+
+<h2>Running your program within gdb</h2>
+This is probably the easiest step in the whole debugging process. Instead of using the name of the executable you will type run followed by the paramters you would use when you start the executable at the prompt.<br/>
+eg.: If you would enter the following command to run your program<br/>
+
+ colle@krtkg1> executable parameter1 paramter2<br/>
+
+then you will enter the following command at the gdb-prompt:<br/>
+
+ (gdb) run parameter1 parameter2<br/>
+ Starting program: /tmp/executable parameter1 parameter2<br/>
+
+After this is done, your program is running within gdb, and you can proceed with the next step.<br/>
+
+<h2>Getting information with gdb</h2>
+This is just a sample session of gdb, I suggest that you read the gdb-docs to get more information about all the available commands.<br/>
+
+After starting the executable which is generated from the example in gdb we will get a Segmentation Fault:<br/>
+
+ (gdb) run<br/>
+ Starting program: /tmp/executable <br/>
+
+ Program received signal SIGSEGV, Segmentation fault.<br/>
+ 0x3ff80857b6c in __memccpy ()<br/>
+
+From the last line we know that something went wrong in __memcpy. We can get more information by examining the stack-frames. There for enter the backtrace command<br/>
+
+ (gdb) ba<br/>
+<ol class="mediawiki">
+<li>0  0x3ff80857b6c in __memccpy ()</li>
+<li>1  0x3ff808755f4 in puts ()</li>
+<li>2  0x120001284 in main () at file.c:11</li>
+<br/>
+</ol>
+From this output we can extract the follwing information:<br/>
+Since puts is a function in the standard library, we can consider it as error-free, and there for we will examine the parameters passed to puts in the main function in file.c. There for we will go 2 stack frames up, with the up command:<br/>
+
+ (gdb) up<br/>
+<ol class="mediawiki">
+<li>1  0x3ff808755f4 in puts ()</li>
+</ol>
+ (gdb) <br/>
+<ol class="mediawiki">
+<li>2  0x120001284 in main () at file.c:11</li>
+</ol>
+ 11        puts(string);<br/>
+
+Not knowing what is wrong, we will examine the string-variable with display:<br/>
+
+ (gdb) display string<br/>
+ 1: string = 0x0<br/>
+
+This line reveals immediatly why puts() is crashing our program. You are not allowed to display NULL-strings.<br/>
+
+Now the question is, why did string become equal to NULL? Again, we will use gdb to find out where and why string is set to NULL.<br/>
+
+To do so, we will break the program when entering the main function, using the break-command:<br/>
+
+ (gdb) break main<br/>
+ Breakpoint 1 at 0x120001238: file file.c, line 5.<br/>
+
+And we restart the program with run.<br/>
+
+ (gdb) run<br/>
+ The program being debugged has been started already.<br/>
+ Start it from the beginning? (y or n) y<br/>
+ Starting program: /tmp/executable <br/>
+ <br/>
+ Breakpoint 1, main () at file.c:5<br/>
+ 5         char *string="Hello world!\n";<br/>
+ 1: string = 0x3ff00000000 <br/>
+
+As you see, string is not yet initialized and therefor it gives the error when trying to read the address!<br/>
+
+Now we will step through the program with the next command:<br/>
+
+ (gdb) next<br/>
+ 7         if (string = NULL) {<br/>
+ 1: string = 0x140000018 "Hello world!\n"<br/>
+
+After line 5 has been executed, we see that string is properly initialised. We go to the next line:<br/>
+
+ (gdb) next<br/>
+ 11        puts(string);<br/>
+ 1: string = 0x0<br/>
+
+And here we see that string has been set to NULL! This means that the last executed line contains some weird code. Getting a closer look at the previous line we immediatly see the error:<br/>
+
+ 7         if (string = NULL) {<br/>
+
+is not what we wanted to do. We wanted to check if string was NULL, and there for we need to use string == NULL, and not string = NULL.<br/>
+
+So we edit file.c and we add the missing =, and we rebuild the executable, using make. Notice how we can use make from within gdb! That's why I suggest everyone to use Makefiles when compiling.<br/>
+
+ (gdb) make<br/>
+ cc -g file.c -o executable<br/>
+
+After the executable has been recompiled, we restart the process again with the run-command<br/>
+
+ (gdb) run<br/>
+ The program being debugged has been started already.<br/>
+ Start it from the beginning? (y or n) y<br/>
+ `/tmp/executable' has changed; re-reading symbols.<br/>
+ Breakpoint 1 at 0x1200011e0: file file.c, line 4.<br/>
+ Starting program: /tmp/executable <br/>
+
+ Breakpoint 1, main () at file.c:4<br/>
+ 4       {<br/>
+
+Again you could use the next command to step through your code. Since we want to speed up things we will use the continue-command:<br/>
+
+ (gdb) cont<br/>
+ Continuing.<br/>
+ Hello world!<br/>
+ <br/>
+ <br/>
+ Program exited normally.<br/>
+
+And we are very lucky with the last line ....<br/>
+
+ Program exited normally.<br/>
+
+This means we debugged our program properly.
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,15 @@
+
+title: Screenshooter
+author: abma
+date: 10-01-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>a very simple program for taking screenshots. Only Press PRINT or ALT+PRINT to take a screenshot, the program automaticly saves it as file into the current working directory. If you want more information, please email matthias at abma.de. ScreenShooter.zip (120KB) ChangeLog * Added absolute Pathinfo into log</p>
+
+{% endfilter %}
+{% endblock %}

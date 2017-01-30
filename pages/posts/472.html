@@ -1,0 +1,21 @@
+
+title: Microsoft Update per VBS/Script aktivieren
+author: abma
+date: 23-11-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Etwas versteckt findet man folgende Möglichkeit um Microsoft Update per Script zu aktivieren:
+
+   Set ServiceManager = CreateObject("Microsoft.Update.ServiceManager")
+   ServiceManager.ClientApplicationID = "My App"
+   Set NewUpdateService = ServiceManager.AddService2("7971f918-a847-4430-9279-4a52d1efe18d",7,"")
+
+Quelle: http://msdn.microsoft.com/en-us/library/aa826676%28VS.85%29.aspx
+
+{% endfilter %}
+{% endblock %}

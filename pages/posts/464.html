@@ -1,0 +1,19 @@
+
+title: Mehr Privatsphäre!
+author: abma
+date: 31-05-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Wer Adblock Plus verwendet sollte Facebook blockieren (schon aus Prinzip!):
+        ||facebook.com^
+        ||fbcdn.net^
+
+Facebook <a href="http://www.spiegel.de/netzwelt/web/0,1518,697733,00.html">pfeift zu sehr auf Datenschutz</a>. Auch sehr spannend: <a href="http://mattmckeon.com/facebook-privacy/">Entwicklung der Standardeinstellungen für die Privatsphäre</a>.
+
+{% endfilter %}
+{% endblock %}

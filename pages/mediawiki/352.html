@@ -1,0 +1,58 @@
+
+title: Iproute2
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Allgemeines</h2>
+F&#252;r traffic shaping unter linux wird das packet <a href="http://devresources.linuxfoundation.org/dev/iproute2/">iproute2</a> bentigt.<br/>
+
+Let's see these commands explained.<br/>
+
+ $ tc qdisc add dev eth0 root handle 1: htb default 10<br/>
+
+<br/>
+This line adds the HTB qdisc to the root handle and gives it the "handle" 1:, which we will use later to refer to. default 10 means that is not otherwise classified will be assigned to the class 1:10.<br/>
+
+ $ tc class add dev eth0 parent 1: classid 1:1 htb rate 120kbit burst 6k<br/>
+
+This command adds a subclass 1:1 to the class defined above. rate 120kbit specifies that network traffic in this class may not use more than 120kbit/s of the bandwidth. burst 6k controls the amount of data that may be sent at once at maximal speed. Without going into deep details, the concept of burst comes from the fact that network speed is not measured instantly, but is computed from averages. If you set burst to a low value, you may experience transfer rates lower than desired; if it's too large, rate limiting will become imprecise and eventually useless. If in doubt, do not specify it, a fairly recent iproute2 will compute the smallest possible value for you.<br/>
+
+Usually it is a good idea to set the root upload rate to a somewhat lower value than your actual uplink is, because this way you can ensure that packet scheduling is performed on your machine, not in your DSL modem/whatever, which might result in a lower performance than what your shiny Linux system would offer.<br/>
+
+ $ tc class add dev eth0 parent 1:1 classid 1:10 htb rate 120kbit burst 6k prio 1<br/>
+ $ tc class add dev eth0 parent 1:1 classid 1:20 htb rate  60kbit burst 6k prio 2<br/>
+ $ tc class add dev eth0 parent 1:1 classid 1:30 htb rate  30kbit burst 6k prio 3<br/>
+
+<br/>
+These commands create three subclasses under the class specified above. These classes will be given the handle 1:10, 1:20 and 1:30. 1:10 (which, as you might remember, is the default class) has the same parameters as the parent class has; this will be useful for traffic we do not want to limit. 1:20 has a speed limit of 60kbit/s, whereas 1:30 is limited to 30kbit/s. By giving each of them a priority, we specify that 1:20 may use up to 60kbit/s of bandwidth, but only to the extent 1:10 is unused. So if we have traffic at 80k/s in 1:10, 1:20 will receive only 40k/s; if 1:10 has 20kbit/s, 1:20 will get 60kbit/s. 1:30 is similar: it may use only 30kbit/s at most, but only if the other classes do not require that bandwidth.<br/>
+
+<br/>
+You can also match on the so-called marks you might make on packets using iptables, which enables the use of iptables' advanced rules not supported by the u32 classifier. This document is not meant to be a guide for iptables, so let's see only one example. I'm running DC++ under wine and want to limit the upload bandwidth it can use. Iptables has a nifty match extension called owner, which makes it possible to check if an outgoing locally-generated packet was created by a process with a given UID, GID, PID, SID, or command name. So I look for "wineserver" (see "ps -A" for process names) and assign mark "2" to all the packets coming from it, and then use tc to assign these packets to a restricted class (1:30): <br/>
+
+ $ iptables -t mangle -A OUTPUT -m owner --cmd-owner wineserver -j MARK --set-mark 2<br/>
+ $ tc filter add dev eth0 protocol ip parent 1:0 handle 2 fw flowid 1:30 <br/>
+
+U32 has many more options and so does iptables, so be sure to check the docs if you need other matches. Should you have matches on the same level that might conflict each other, be sure to assign priorities to each of them (prio 1, prio 2 etc.) to your liking.<br/>
+
+<h2>Alles wieder aufr&#228;umen</h2>
+ $ tc qdisc del eth0 root<br/>
+
+<h2>Klassen anzeigen</h2>
+ tc class show dev eth0<br/>
+
+<h2>links</h2>
+<br/>
+<ul class="mediawiki">
+<li>http://forums.gentoo.org/viewtopic.php?t=225863&highlight=shaping (Gentoo forum)</li>
+<li>http://gentoo-wiki.com/HOWTO_Packet_Shaping</li>
+</ul>
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

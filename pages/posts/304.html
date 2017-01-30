@@ -1,0 +1,15 @@
+
+title: libvirt and virtualbox-ose not working?
+author: abma
+date: 31-10-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>I tried to use libvirt and virtualbox-ose, but i only get this error:</p><blockquote><p><code>$ virsh Fehler: no hypervisor driver available Fehler: Verbindung zum Hypervisor scheiterte </code></p></blockquote><p>After an &quot;strace -e open virsh&quot; i found, that it can't found VBoxXPCOMC.so. Virtualbox-ose installs into /usr/lib64/virtualbox-ose/ but libvirt searchs in /usr/lib64/virtualbox ...</p><p>The solution was to set the env-variable VBOX_APP_HOME before starting virsh:  <code> </code></p><blockquote><p><code>VBOX_APP_HOME=/usr/lib64/virtualbox-ose virsh </code></p></blockquote><p>And now it works! :-)</p>
+
+{% endfilter %}
+{% endblock %}

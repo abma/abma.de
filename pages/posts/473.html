@@ -1,0 +1,23 @@
+
+title: Enable remote desktop on Windows XP by script
+author: abma
+date: 30-11-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+To enable the RDP service on Port 3389 in Windows xp, just run these commands in an script:
+
+netsh firewall add portopening TCP 3389 RDP enable all
+ 
+reg add "hklm\system\currentcontrolset\control\terminal server" /f /v fDenyTSConnections /t REG_DWORD /d 0
+reg add "hklm\system\currentcontrolset\control\terminal server" /f /v fAllowToGetHelp /t REG_DWORD /d 0
+ 
+NET STOP TermService
+NET START TermService
+
+{% endfilter %}
+{% endblock %}

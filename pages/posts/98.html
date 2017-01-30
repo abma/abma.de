@@ -1,0 +1,19 @@
+
+title: Openldap startet nach update nicht mehr?
+author: abma
+date: 07-06-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+bei der fehlermeldung
+<blockquote>bdb(dc=domain,dc=suffix): Program version 4.3 doesn't match environment version</blockquote>
+hilft ein
+<blockquote>db4.3_upgrade *.bdb</blockquote>
+im datenbank verzeichnis, bzw.  ein alternativ ein db4.2_recover.
+
+{% endfilter %}
+{% endblock %}

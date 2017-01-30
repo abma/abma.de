@@ -1,0 +1,18 @@
+
+title: Neulich im Netz
+author: abma
+date: 22-10-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<ul>
+	<li><a href="http://www.benutzer.de/Informatiker_sind_die_besten_und_%DCberlebensk%FCnstler.html">Informatiker sind Überlebenskünstler.</a></li>
+	<li><a href="http://www.ehrensenf.de/">Ehrensenf</a> präsentiert zu jedem Wochentag die Nachrichten in einem kurzen Clip. (Wer kennt das denn noch nicht?)</li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

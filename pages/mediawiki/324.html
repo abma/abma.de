@@ -1,0 +1,35 @@
+
+title: Chemnitz/AuPUebungDrucken
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h1>AuP &#220;bung Druckvorschlag</h1>
+<br/>
+OS: Windows<br>
+Programm: Acrobat Reader 7.0<br>
+<br>
+<b>Drucken Dialog</b>
+<ul class="mediawiki">
+<li> Seiten NICHT umkehren</li>
+<li> Seitenanpassung: Mehrere Seiten pro Blatt</li>
+<li> Seiten pro Blatt: 6</li>
+<li> Seitenanordnung: Horizontal</li>
+<li> Seiten NICHT automatisch drehen</li>
+</ul>
+<br>
+<b>Eigenschaften Dialog</b>
+<ul class="mediawiki">
+<li> Orientierung: Querformat</li>
+<li> Beidseitiger Druck: Lange Seite</li>
+<li> Seitenreihenfolge: Von vorne nach hinten</li>
+<li> Seiten pro Blatt: 1</li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

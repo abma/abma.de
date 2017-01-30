@@ -1,0 +1,26 @@
+
+title: Druckbarer Bereich bei CUPS-PDF unter Windows ändern
+author: abma
+date: 01-04-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Bei den meisten Anleitungen den CUPS-PDF einzurichten, wird empfohlen den "Apple Color LaserWriter 12/600" Druckertreiber für Windows zu nehmen. Dieser Treiber hat allerdings die Einschränkung, dass nicht die komplette Seite bedruckt werden kann.
+
+Wenn man jedoch die Zeile 
+<code>
+*ImageableArea A4: "14.1601 14.2401 582.48 819.32 "
+</code>
+auf 
+<code>
+*ImageableArea A4: "0.0 0.0 595.0 842.0 "
+</code>
+
+in der .ppd Datei (APLWCOB1.PPD) des Druckertreibers ändert, kann die ganze Din-A4 Seite bedruckt werden.
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,29 @@
+
+title: Bios-Informationen unter Linux auslesen
+author: abma
+date: 17-07-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Dafür gibt es das tool <a href="http://www.nongnu.org/dmidecode/">dmidecode</a>.  Nützlich, falls man nicht weiss welches Mainboard in einem Rechner installiert ist.
+
+Beispielausgabe von einem Ausus A8V mainboard:
+
+<blockquote>dmidecode --type 2
+# dmidecode 2.9
+SMBIOS 2.3 present.
+
+Handle 0x0002, DMI type 2, 8 bytes
+Base Board Information
+        Manufacturer: ASUSTeK Computer Inc.
+        Product Name: A8V
+        Version: Rev 1.xx
+        Serial Number: MB-1234567890
+</blockquote>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,38 @@
+
+title: Cdrecord
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Script for burning dvd on the fly</h2>
+<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ if [ "$2" == "" ] ;then<br/>
+         echo Usage: $0 pathtoburn label<br/>
+         exit 1<br/>
+ fi<br/>
+ <br/>
+<ol class="mediawiki">
+<li>s is needed on the end (this is no typo!)</li>
+</ol>
+ tsize=`mkisofs -J -print-size -V "$2" "$1" 2>/dev/null 0>/dev/null`s<br/>
+ <br/>
+ echo -e "\n"<br/>
+ echo tsize=$tsize<br/>
+ du -hs $1<br/>
+ echo Volume label: $2<br/>
+ echo press STRG+C to abort!<br/>
+ echo -e "\n\n\n"<br/>
+ mkisofs -J -V "$2" "$1" 2>/dev/null | cdrecord-wrapper.sh -v -dao -tsize $tsize -<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,20 @@
+
+title: header
+author: abma
+date: 31-12-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<?php
+echo $_SERVER["REQUEST_METHOD"].' '.$_SERVER["REQUEST_URI"].' '.$_SERVER["SERVER_PROTOCOL"]."<br/>";
+$head=apache_request_headers();
+while(list($name,$value)=each($head))
+echo $name.': '.$value."<br/>";
+?>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,20 @@
+
+title: Befehle um WindowsXP wiederherzustellen
+author: abma
+date: 17-06-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Standard NTFS-Rechte setzen: (z.B. wenn man unter linux windows von partition a auf partition b kopiert hat)
+<blockquote>secedit /configure /cfg “c:\windows\security\templates\setup security.inf” /db waisaw.sdb /verbose</blockquote>
+
+
+Wiederherstellungskonsole auf festplatte installieren:
+<blockquote>d:\i386\winnt32.exe /cmdcons</blockquote>
+
+{% endfilter %}
+{% endblock %}

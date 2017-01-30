@@ -1,0 +1,39 @@
+
+title: Openssh
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>SSH weiterleiten</h2>
+mit mehreren lokalen <a href="/">Ports</a>
+ ssh -L 2000:192.168.1.220:80 -L 2001:192.168.1.221:80 -L 2002:192.168.1.222:80 -L 2003:192.168.1.223:80 ssh.server.net<br/>
+
+<h2>SSH login per public key</h2>
+key erzeugen:<br/>
+ ssh-keygen -t rsa -b 4096<br/>
+key auf server kopieren:<br/>
+ scp .ssh/id_rsa.pub server:~/.ssh/authorized_keys<br/>
+server-config anpassen:<br/>
+
+/etc/ssh/sshd_config:<br/>
+
+ Protocol 2<br/>
+ PermitRootLogin no<br/>
+ PubkeyAuthentication yes<br/>
+ AuthorizedKeysFile      .ssh/authorized_keys<br/>
+ RSAAuthentication yes<br/>
+ RhostsRSAAuthentication no<br/>
+ HostbasedAuthentication no<br/>
+ PasswordAuthentication no<br/>
+ PermitEmptyPasswords no<br/>
+ MaxAuthTries 1<br/>
+ PrintMotd yes<br/>
+ UseLogin no
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,33 @@
+
+title: Apache:.htaccess
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Alles von www.domain.com auf domain.com umleiten</h2>
+<br/>
+.htaccess in /<br/>
+
+ RewriteEngine On<br/>
+ RewriteCond %{HTTP_HOST} ^www\.domain\.com$ [NC]<br/>
+ RewriteRule ^(.*)$ http://domain.com/$1 [R=301,L]<br/>
+
+siehe auch http://no-www.org/<br/>
+
+<br/>
+<h2>Beispiel f&#252;r .htaccess</h2>
+Options +Indexes<br/>
+
+Order deny,allow<br/>
+Deny from all<br/>
+Allow from 192.168<br/>
+
+DirectoryIndex index.php
+
+{% endfilter %}
+{% endblock %}

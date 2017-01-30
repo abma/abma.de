@@ -1,0 +1,15 @@
+
+title: Festplatte zu laut?
+author: abma
+date: 01-01-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Dann hilft eventuell das Tool <a href="http://www.withopf.com/tools/aam/">WinAAM</a>. Damit kann das <a href="http://de.wikipedia.org/wiki/Automatic_acoustic_management">Acoustic-Management</a> der Festplatte eingestellt werden. Meine Festplatte (Maxtor 6Y160P0) war auf laut eingestellt, der unterschied zu leise ist erstaunlich, auf der lauten Einstellung waren Zugriffe sehr deutlich zu hören, auf der leisesten Einstellung ist die Festplatte quasi nicht mehr hörbar.  Unter linux geht das&nbsp; selbe mit &quot;hdparm -M 128 /dev/hda&quot;.</p>
+
+{% endfilter %}
+{% endblock %}

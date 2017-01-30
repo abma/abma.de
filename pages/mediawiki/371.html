@@ -1,0 +1,44 @@
+
+title: Mrtg
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Mrtg zeigt keine werte an / nur 0/0</h2>
+<br/>
+Mrtg braucht je nach konfiguration 2 updates, also 10 minuten bis daten angezeigt werden, also geduld! :-)<br/>
+
+<br/>
+<h2>Mrtg lockfile error</h2>
+Fehler:<br/>
+ ERROR: I guess another mrtg is running. A lockfile (/var/lock/mrtg/_etc_mrtg.cfg_l) aged<br/>
+ 0 seconds is hanging around. If you are sure that no other mrtg<br/>
+ is running you can remove the lockfile<br/>
+M&#246;gliche l&#246;sung:<br/>
+2 crontab eintr&#228;ge existieren. meistens wird vom package einer automatisch angelegt und wenn dann noch einer manuell eingetragen wird.. p&#228;ng.<br/>
+
+<h2>Beispiel config f&#252;r snmp</h2>
+Die 2 am ende in der Zeile Target steht f&#239;&#191;&#189;r die snmp version.<br/>
+mrtg.cfg:<br/>
+ Title[smc-router]: Ocetets In and Ocetets Out<br/>
+ PageTop[smc-router]: Ocetets In and Ocetets Out<br/>
+ Target[smc-router]: ifInOctets.4&ifOutOctets.4:public@router:::::2<br/>
+ MaxBytes[smc-router]: 4000000000<br/>
+ Directory[smc-router]: smc<br/>
+ Options[smc-router]: growright,nopercent,noinfo,nobanner,unknaszero<br/>
+ <br/>
+ Title[smc-connections]: connections open<br/>
+ PageTop[smc-connections]: Open Connections<br/>
+ Unscaled[smc-connections]:dwmy<br/>
+ Target[smc-connections]: tcpPassiveOpens.0&tcpActiveOpens.0:public@router:::::2<br/>
+ MaxBytes[smc-connections]: 1000<br/>
+ Directory[smc-connections]: smc<br/>
+ Options[smc-connections]: growright,nopercent,gauge,noinfo,nobanner,unknaszero
+
+{% endfilter %}
+{% endblock %}

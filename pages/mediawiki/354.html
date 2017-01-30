@@ -1,0 +1,43 @@
+
+title: Kernel
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>kernel runterladen und gleichzeitig entpacken</h2>
+<br/>
+ wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.9.tar.bz2\<br/>
+ --output-document - |tar xijv<br/>
+
+<h2>cfq als default scheduler einstellen</h2>
+<br/>
+cfq als scheduler on the fly &#228;ndern:<br/>
+ echo cfq>/sys/block/hda/queue/scheduler<br/>
+
+bzw. als kernelparameter (bsp f&#252;r grub)<br/>
+ kernel /boot/bzImage root=/dev/hda2 ro quiet sched=cfq<br/>
+
+<h2>framebuffer deaktivieren</h2>
+als kernelparameter anh&#228;ngen:<br/>
+ fb=no<br/>
+
+<h2>default init runlevel &#228;ndern</h2>
+als kernelparameter anh&#228;ngen:<br/>
+ init 1<br/>
+
+<br/>
+<h2>kernel f&#252;r eine andere als die aktuelle architektur kompilieren</h2>
+make ARCH=i386 <br/>
+
+g&#252;ltige werte f&#252;r i386:<br/>
+ ls arch/<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

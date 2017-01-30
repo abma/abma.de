@@ -1,0 +1,19 @@
+
+title: force a reboot in linux
+author: abma
+date: 26-06-2012
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+if a server badly crashed but is still reachable via ssh, then a reboot can be forced:
+
+     echo b > /proc/sysrq-trigger
+
+this is similar to pressing the reset button :)
+
+{% endfilter %}
+{% endblock %}

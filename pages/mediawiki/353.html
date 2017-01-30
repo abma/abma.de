@@ -1,0 +1,286 @@
+
+title: Iptables
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>enable masquerade</h2>
+Nat aktivieren:<br/>
+ iptables -A POSTROUTING -t nat -s 192.168.1.0/255.255.255.0 -o ppp0 -j MASQUERADE<br/>
+ echo 1 > /proc/sys/net/ipv4/ip_forward<br/>
+
+<br/>
+<h2>beispiel firewall</h2>
+<br/>
+
+<ol class="mediawiki">
+<li>/bin/sh </li>
+<li> Ein einfaches iptables-Firewall</li>
+</ol>
+  <br/>
+<ol class="mediawiki">
+<li> Interface ins Internet</li>
+</ol>
+ EXTIF=ppp0<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Netzwerke</li>
+</ol>
+ ANY=0.0.0.0/0<br/>
+ LAN=192.168.111.0/24<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Spezielle Hosts - editieren !!!</li>
+</ol>
+ VPN_GATE=$ANY<br/>
+  <br/>
+<ol class="mediawiki">
+<li> NetBIOS, SMB, SQL Server, NFS, X11</li>
+</ol>
+ BAD_TCP="135:139 445 1433 2049 5999:6063"    <br/>
+ BAD_UDP="135:139 445 1433 2049 5999:6063"    <br/>
+  <br/>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ######################<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> spez. Kernel-Features</li>
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ######################<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> kein IP spoofing</li>
+<li> abgeschaltet wg. FreeS/WAN</li>
+<li>if [ -e /proc/sys/net/ipv4/conf/all/rp_filter ] ; then</li>
+<li>     for i in /proc/sys/net/ipv4/conf/*/rp_filter; do</li>
+<li>       echo 1 > $i</li>
+<li>     done</li>
+<li>fi</li>
+</ol>
+  <br/>
+<ol class="mediawiki">
+<li> SYN Flood protection</li>
+</ol>
+ if [ -e  /proc/sys/net/ipv4/tcp_syncookies ] ; then<br/>
+  echo 1 > /proc/sys/net/ipv4/tcp_syncookies<br/>
+ fi<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Disable Source Routed Packets</li>
+</ol>
+ for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do<br/>
+   echo 0 > $i<br/>
+ done<br/>
+  <br/>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ##################<br/>
+</ol>
+</li>
+</ol>
+</li>
+<li>  IPTABLES    ##</li>
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ##################<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> Flush all</li>
+</ol>
+ iptables -F <br/>
+ iptables -t nat -F <br/>
+ iptables -t mangle -F<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Policies</li>
+</ol>
+ iptables -P INPUT DROP   <br/>
+ iptables -P FORWARD DROP   <br/>
+ iptables -P OUTPUT ACCEPT<br/>
+  <br/>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> MASQ</li>
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+ iptables -t nat -A POSTROUTING -o $EXTIF -s $LAN -j MASQUERADE<br/>
+  <br/>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> INPUT</li>
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> alles was ueber lokale Interfaces reinkommt (!=ppp0)</li>
+</ol>
+ iptables -A INPUT -m state --state NEW -i ! $EXTIF -j ACCEPT<br/>
+ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Incoming ssh </li>
+<li> iptables -A INPUT -s $VPN_GATE -p tcp --dport ssh -j ACCEPT</li>
+<li> FreeS/WAN IPSec</li>
+<li> iptables -A INPUT -s $VPN_GATE -p udp --dport 500 -j ACCEPT</li>
+<li> iptables -A INPUT -s $VPN_GATE -p 50 -j ACCEPT</li>
+</ol>
+  <br/>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> FORWARD</li>
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+<li>
+<ol class="mediawiki">
+ ############<br/>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li> bad ports -- never ever (teilweise redundant)</li>
+</ol>
+ for i in $BAD_TCP; do<br/>
+     iptables -A FORWARD -p tcp --dport $i -j DROP<br/>
+     iptables -A FORWARD -p tcp --sport $i -j DROP<br/>
+ done<br/>
+ for i in $BAD_UDP; do<br/>
+     iptables -A FORWARD -p udp --dport $i -j DROP<br/>
+     iptables -A FORWARD -p udp --sport $i -j DROP<br/>
+ done<br/>
+  <br/>
+<ol class="mediawiki">
+<li> MTU-Problem bei DSL fixen</li>
+<li> iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</li>
+</ol>
+  <br/>
+<ol class="mediawiki">
+<li> alles was ueber lokale Interfaces reinkommt (!=ppp0)</li>
+</ol>
+ iptables -A FORWARD -m state --state NEW -i ! $EXTIF -j ACCEPT<br/>
+ iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT<br/>
+  <br/>
+<ol class="mediawiki">
+<li> Forwarding einschalten</li>
+</ol>
+ echo 1 > /proc/sys/net/ipv4/ip_forward<br/>
+
+<h2>verbindungsversuche pro ip und zeit einschr&#228;nken</h2>
+<br/>
+n&#252;tzlich um ssh-bruteforce zu blocken<br/>
+
+ iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT<br/>
+ iptables -A INPUT -i eth0 -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 3 --rttl --name SSH -j LOG<br/>
+ iptables -A INPUT -i eth0 -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 3 --rttl --name SSH -j DROP<br/>
+
+siehe auch<br/>
+
+ http://www.stearns.org/doc/adaptive-firewalls.current.html<br/>
+ http://www.stearns.org/pomlist/0.2.2-output/pom-combined.html#recent<br/>
+ http://www.swisspowered.net/wiki/index.php/Networking:Brute_force_SSH<br/>
+
+<h2>links</h2>
+<ul class="mediawiki">
+<li><a href="/">Traffic Shaping</a></li>
+<br/>
+</ul>
+<br/>
+<a href="/home/wiki/Kategorie: Linux">Kategorie: Linux</a>
+
+{% endfilter %}
+{% endblock %}

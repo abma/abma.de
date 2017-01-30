@@ -1,0 +1,27 @@
+
+title: Why i switched from Xen to KVM
+author: abma
+date: 04-09-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+In the last weeks i switched some servers from Xen to KVM. Why?
+
+My big points to switch were:
+
+The bugtracker isn't maintained, <a href="http://bugzilla.xensource.com/bugzilla/show_bug.cgi?id=1038">a bug</a> i reported about 2 years ago is marked as new! It is fixed, but it doesn't look like the xen-developers have a good contact to the community.
+
+The (Hypervisor-)Xen-support seems to go never into the mainline kernel. KVM is from the early beginning there, this makes different problems: if you want to use xen, you have to use a very old kernel (2.6.18).
+
+KVM is supported by one of the biggest linux distributions: ubuntu.
+
+KVM supports nested virtualization: it allows to run a hypervisor in a guest domain!
+
+Xen seems to be unstable, i had many crashes or kernel panics while installing. I tryed many differnt kernels and configs to get a domU paravirtualized running. When it runs, i had problems too with lvm for example. KVM+Virtio works like a charm and i can use the vanilla-kernel without any problems :)
+
+{% endfilter %}
+{% endblock %}

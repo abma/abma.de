@@ -1,0 +1,38 @@
+
+title: Gnome
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Standardbrowser festlegen</h2>
+<br/>
+ gconftool-2 --set /desktop/gnome/url-handlers/http/command -t string 'firefox %s'<br/>
+ gconftool-2 --set /desktop/gnome/url-handlers/https/command -t string 'firefox %s'<br/>
+
+<h2>gnome-screensaver startet nicht</h2>
+<br/>
+bei folgender fehlermeldung:<br/>
+ (gnome-screensaver:5578): gnome-screensaver-WARNING **: failed to<br/>
+ register with the message bus<br/>
+bzw.<br/>
+ (gnome-screensaver:3695): gnome-screensaver-WARNING **: Connection ":1.15"<br/>
+ is not allowed to own the service  "org.gnome.ScreenSaver" due to security policies<br/>
+ in the configuration file<br/>
+
+<br/>
+
+muss entweder die DBUS_SESSION_BUS_ADDRESS variable richtig gesetzt sein wenn<br/>
+gnome-screensaver gestartet wird.  Falls gnome mit startx gestartet wird, kann man gnome-session auch mit<br/>
+ dbus-launch gnome-session<br/>
+in der datei ~/.xinitrc starten.<br/>
+
+<h2>Links</h2>
+http://www.gnome.org/
+
+{% endfilter %}
+{% endblock %}

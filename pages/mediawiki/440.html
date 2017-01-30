@@ -1,0 +1,15 @@
+
+title: Xorg
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Wie mache ich einen screenshot unter linux?</h2> <p><br /> (getestet unter gentoo-linux)<br />   xwd -frame -root -silent | convert xwd:- $filename<br />  convert wird von dem packet &quot;imagemagick&quot; bereitgestellt</p><h2>xserver remote über ssh</h2> <p><br /> in /etc/X11/fs/config no-listen auskommentieren und los gehts<br />  angenommen du bist hier im pool und verwendest putty, dann gehts so<br />  Tunnels: X11 Forwarding ausschalten Source Port 6000 Destination: localhost:6000 und remote anwählen, dann auf add klicken.<br />  dann login auf dem server1<br />  dort eingeben:<br />   ssh -R 6000:localhost:6000 server2<br />  und server2 dann eingeben<br />   export DISPLAY=localhost:0.0<br />  dann auf dem pool rechner x starten, und dann auf server2 ne xanwendung starten.<br />  damit sollte es mï&iquest;&frac12;glich sein ï&iquest;&frac12;ber beliebig viele rechner zu tunneln... (was aber sicher seeeeeeeehr langsam wird :-)<br />  unter linux also nur:<br />   X &amp;<br />  ssh -R 6000:localhost:6000 server1<br />  ssh -R 6000:localhost:6000 server2<br />  ...<br />  ssh -R 6000:localhost:6000 serverN<br />   export DISPLAY=localhost:0.0<br />   xanwendung</p><h2>XOrg Cursor ändern</h2> <p><br />  /usr/share/cursors/xorg-x11/default/index.theme<br />  Inherits=foo <br />  wobei foo ist der name des Verzeichnisses von unter /usr/share/cursors/xorg-x11<br />  Gentoo:<br />  Please note that the xcursors are in /usr/share/cursors/xorg-x11<br /> Any custom cursor sets should be placed in that directory<br />  If you wish to set system-wide default cursors, please set<br /> them in /usr/local/share/cursors/xorg-x11/default/index.theme so that future<br /> emerges will not overwrite those settings<br />  Listening on TCP is disabled by default with startx.<br /> To enable it, edit /usr/X11R6/bin/startx.<br />  <a href="/">Xorg:xorg.conf</a> </p><h2>Tastenkürzel</h2> <p>&nbsp;</p><ul class="mediawiki"> <li>alt + klick auf fenster (tasten halten) =&gt; fenster verschieben</li> <li>alt + F8: größe ändern</li> <li>alt + F...</li> <li>alt + SCROLLRAD nach OBEN/UNTEN Desktop wechseln</li> <li>STRG + ALT + D alle fenster minimieren, ein zweites mal macht dies rückgängig</li> <br /> </ul><p>...</p><h2>tastatur/maus-events unter x anzeigen lassen</h2> <p><br /> das funktioniert mit dem tool <a href="http://xorg.freedesktop.org/">xev</a> eventuell funktioniert auch ein<br />  cat /dev/input/mice<br /> bzw.<br />  hexdump /dev/input/mice</p><h2>Mausrad konfigurieren</h2><p>http://gentoo-wiki.com/HOWTO_Mouse_Scrollwheel<br />  <a href="/home/wiki/Kategorie: Linux">Kategorie: Linux</a></p><p>&nbsp;</p>
+
+{% endfilter %}
+{% endblock %}

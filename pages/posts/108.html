@@ -1,0 +1,23 @@
+
+title: Ntfsclone übers Netz
+author: abma
+date: 02-08-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Um eine ntfs-partition über das netz zu clonen eignen sich die Tools netcat und ntfsclone:
+
+auf dem zielpc (ip 192.168.0.50): (um in eine datei zu speichern)
+
+<blockquote>netcat -l -p 9000 > spock2.ntfsclone</blockquote>
+
+auf dem quellpc:
+
+<blockquote>ntfsclone -s -o - /dev/hda1 | netcat 192.168.0.50 9000</blockquote>
+
+{% endfilter %}
+{% endblock %}

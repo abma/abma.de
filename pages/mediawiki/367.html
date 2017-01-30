@@ -1,0 +1,20 @@
+
+title: Makefile
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Beispiel f&#252;r eine simple makefile</h2>
+<br/>
+ all: <br/>
+         gcc main.c -o prog<br/>
+ clean:<br/>
+         rm -f prog
+
+{% endfilter %}
+{% endblock %}

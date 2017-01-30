@@ -1,0 +1,47 @@
+
+title: Openldap
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>openldap konfigurieren/ initialisieren</h2>
+<br/>
+base.ldif:<br/>
+
+ dn: dc=abma,dc=de<br/>
+ objectclass: dcObject<br/>
+ objectclass: organization<br/>
+ o: abma.de<br/>
+ dc: abma<br/>
+
+ ldapadd -x -D "cn=Manager,dc=abma,dc=de" -w secret -f base.ldif<br/>
+
+<h2>openldap startet nicht</h2>
+ausgabe von<br/>
+/usr/lib/openldap/slapd -d 9<br/>
+<h2>schnippschnapp</h2>
+ bdb_db_open: dbenv_open(/var/lib/openldap-data)<br/>
+ bdb(dc=rsw-bc,dc=de): Program version 4.2 doesn't match environment version<br/>
+ bdb_db_open: dbenv_open failed: Das Argument ist ung&#252;ltig (22)<br/>
+ backend_startup: bi_db_open(0) failed! (22)<br/>
+ slapd shutdown: initiated<br/>
+ ====> bdb_cache_release_all<br/>
+ slapd shutdown: freeing system resources.<br/>
+ bdb(dc=rsw-bc,dc=de): txn_checkpoint interface requires an environment configured for the transaction subsystem<br/>
+ bdb_db_destroy: txn_checkpoint failed: Das Argument ist ung&#252;ltig (22)<br/>
+ ====> bdb_cache_release_all<br/>
+ slapd stopped.<br/>
+ connections_destroy: nothing to destroy.<br/>
+
+geholfen hat bei mir ein start von <br/>
+ slapindex<br/>
+
+vermutlich war durch einen absturz die datenbank kaputt :-)<br/>
+
+{% endfilter %}
+{% endblock %}

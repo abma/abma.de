@@ -1,0 +1,27 @@
+
+title: FUSE - Das Dateisystem der Zukunft ?!
+author: abma
+date: 03-08-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Für das <a href="http://fuse.sourceforge.net/">Filesystem in Userspace</a> (FUSE) gibt es viele interessante Module, um nur ein paar zu nennen:
+<ul>
+	<li><a href="http://mattwork.potsdam.edu/projects/wiki/index.php/CopyFS">CopyFS</a> (Versionierung aller Dateien)</li>
+	<li><a href="http://www.jankratochvil.net/project/captive/">Captive</a> (Schreibzugriff auf NTFS-Partitionen)</li>
+	<li><a href="http://fuse.sourceforge.net/sshfs.html">SSHFS</a> (Über SSH ein Verzeichnis mounten)</li>
+	<li><a href="http://avf.sourceforge.net/">AVFS</a> (Archive direkt bearbeiten)</li>
+</ul>
+Sogar ein <a href="http://www.wizy.org/wiki/ZFS_on_FUSE">Modul für ZFS</a> ist in Entwicklung.
+Diese Module sollten sich sogar beliebig miteinander kombinieren lassen, in dem hintereinander die einzelnen Treiber läd. Auch GLScupe basiert auf FUSE.
+
+Ansich sind alle Module sehr interessant und auch relativ einfach einzurichten, da nur ein User-Mode programm benötigt wird.
+
+Auf der FUSE-Homepage gibt es eine Liste vieler interessanter <a href="http://fuse.sourceforge.net/wiki/index.php/FileSystems">FUSE-Treiber</a>.
+
+{% endfilter %}
+{% endblock %}

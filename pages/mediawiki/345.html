@@ -1,0 +1,31 @@
+
+title: Grub
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>nbgrub</h2>
+damit nbgrub unter gentoo compiliert wird, muss dass das use-flag netboot aktiviert sein.<br/>
+ USE=netboot emerge grub<br/>
+
+<h2>Grub von LiveCD installieren</h2>
+<br/>
+auf hda1 liegt /boot, hda ist die festplatte von der gebootet werden soll. hda1 muss als aktiv markiert sein. (fdisk /dev/hda1, dann p dr&#252;cken, und wenn hda1 nicht als boot markiert ist mit a und dann 1 aktivieren)<br/>
+
+ mkdir -p /mnt/tmp<br/>
+ mount /dev/hda1 /mnt/tmp<br/>
+ grub-install --root-directory=/mnt/tmp /dev/hda<br/>
+
+und nun den rechner neu starten.<br/>
+
+<h2>Links</h2>
+<a href="http://www.gnu.org/software/grub/manual/grub.html Grub 1">Manual</a>
+<a href="http://gentoo-wiki.com/HOWTO_Gentoo_Diskless_Install Diskless">Install</a>
+
+{% endfilter %}
+{% endblock %}

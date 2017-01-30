@@ -1,0 +1,15 @@
+
+title: mod_rewrite-hell (-:
+author: abma
+date: 22-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Da ich den Blog von /home nach / verschoben und lesbare URLs aktiviert habe musste ich für die alten Links der Form /home/?q=node/1 auf das neue Schema /node/1 einen Redirect einrichten.</p><p>Das geht in Apache mit dem Modul mod_rewrite: <code> </code></p><blockquote><p><code>.htaccess:</code><br /><code>RewriteCond %{REQUEST_URI} </code><code>^/home RewriteCond %{QUERY_STRING} [0-9]+ <br />RewriteRule ^(.*)$ /node/%0? [R=301,L]</code></p></blockquote><p>Apache überprüft zuerst, ob die RewriteRule anwendbar ist, dann werden die RewriteCond überprüft: Die erste RewriteCond testet, ob in REQUEST_URI die ersten zeichen (da ein ^ am Anfang steht) mit /home beginnen.</p><p>Die zweite Regel such einfach nach einer Zahl.  Und mit der RewriteRule wird dann die URL überschrieben, links steht was überschrieben werden soll ^(.*)$ heißt im Prinzip die komplette URL. Daneben steht mit was überschrieben wird /node/ ist klar, %0 bedeutet der Wert den die Regex eine Zeile vorher ermittelt hat und das Fragezeichen bedeutet, dass keine Parameter mehr angehängt werden sollen.</p><p>In den Eckigen klammern stehen noch Parameter zum Redirect, 301 ist der HTTP-Code, L bedeutet, dass keine weiteren RewriteRules mehr abgearbeitet werden.  Dann hat noch das Wiki gefehlt, das ist auch in Drupal umgezogen. Die Umleitung für die alten Links war dort aber relativ einfach: <code> </code></p><blockquote><p><code>.htaccess:<br />RewriteRule ^wiki/index.php(.*)$ wiki/$1 [L,R=301] </code></p><p>&nbsp;</p></blockquote>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,17 @@
+
+title: migrated to cactus
+author: abma
+date: 30-01-2017
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+I've migrated to <a href="https://github.com/eudicots/Cactus">Cactus</a> as i'm sick of updating drupal because of security holes. Cactus is a static page generator so all pages are now static html!
+
+The layout is still work in progress but all content should be already there. Some posts were deleted as <a href="https://blog.fefe.de/">Fefe</a> and <a href="https://netzpolitik.org">netzpolitik.org</a> do a much better job! :-)
+
+{% endfilter %}
+{% endblock %}

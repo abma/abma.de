@@ -1,0 +1,23 @@
+
+title: Netboot
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Testen ob nfs/portmap (und damit locking) richtig eingerichtet ist:</h2>
+rpcinfo -u 192.168.1.2 100021<br/>
+
+<h2>Links</h2>
+<br/>
+<ul class="mediawiki">
+<li><a href="http://oss.netfarm.it/guides/pxe.php Windows &#252;ber Netzwerk booten (BartPE /">PXE)</a></li>
+<li><a href="http://www.gentoo.org/doc/de/altinstall.xml#doc_chap5 pxegrub anleitung f&#252;r gentoo">installation</a></li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

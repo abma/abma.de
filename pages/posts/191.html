@@ -1,0 +1,27 @@
+
+title: Bandsicherung mit NTBackup
+author: abma
+date: 23-08-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Um mit NTBackup auf Band zu sichern eignet sich folgendes Script:
+
+<code>
+@echo off
+rem id mit dem befehl auslesen: rsm view /TLIBRARY /guiddisplay  /DESC
+set GUID=1234567890ABCDEF01234567890ABCDE
+rsm refresh /PG%GUID%
+ping -n 30 127.0.0.1
+ntbackup backup @gesamt.bks /m normal /um /p "8mm AIT"
+rsm eject /LG%GUID%  /AStart
+</code>
+
+Das Script überschreibt (!!!) das Band im Pool "8mm AIT" mit einer Sicherung der Auswahl der Datei "gesamt.bks" die mit ntbackup erstellt werden kann. Der Ping Befehl ersetzt ein sleep 30.
+
+{% endfilter %}
+{% endblock %}

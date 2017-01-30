@@ -1,0 +1,37 @@
+
+title: Mysql
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Beispiele f&#252;r SQL-queries</h2>
+<br/>
+
+<h3>CREATE TABLE</h3>
+http://dev.mysql.com/doc/mysql/en/create-table.html<br/>
+
+ CREATE TABLE address_book (first_name VARCHAR(25),<br/>
+ last_name VARCHAR(25),<br/>
+ phone_number VARCHAR(15))";<br/>
+
+<h3>SELECT</h3>
+http://dev.mysql.com/doc/mysql/en/select.html<br/>
+
+<h3>JOIN</h3>
+http://dev.mysql.com/doc/mysql/en/join.html<br/>
+
+<h2>Warum funktionieren Foreign keys nicht?</h2>
+<br/>
+ist die tabellen engine innodb? in myisam scheints nicht zu funktioniern.<br/>
+
+ show table status from `database`;<br/>
+
+gibt informationen dar&#252;ber, was f&#252;r eine engine verwendet wird.
+
+{% endfilter %}
+{% endblock %}

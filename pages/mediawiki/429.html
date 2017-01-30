@@ -1,0 +1,30 @@
+
+title: Windows/Mcafee
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Ausgehende Verbindungen werden blockiert</h2>
+<br/>
+Pl&#246;tzlich kein zugriff mehr auf Mailserver Port 25 m&#246;glich?<br/>
+-Danke an Mcafee! Durch ein update, wurde das "feature" eingebaut, dass ausgehende Verbindungen blockiert werden.<br/>
+
+so wirds deaktiviert:<br/>
+
+<ul class="mediawiki">
+<li>rechtsklick auf das tray-icon->VirusScan-Konsole</li>
+<li>rechtsklick auf Zugriffsschutz -> Eigenschaften</li>
+<li>h&#228;ckchen von "Senden von E-Mails durch Massenmail-W&#252;rmer verhindern" entfernen.</li>
+<li>ok klicken</li>
+<li>fenster schliessen</li>
+<br/>
+</ul>
+Viel spass beim Mailen!
+
+{% endfilter %}
+{% endblock %}

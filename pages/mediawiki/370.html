@@ -1,0 +1,32 @@
+
+title: Mplayer
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Mit mplayer DVD von Fesplatte abspielen</h2>
+ mplayer -dvd-device /pfad/zu/VIDEO_TS dvd://1<br/>
+
+<h2>wmv to mpeg konvertieren</h2>
+<br/>
+ mencoder -of mpeg -ovc lavc -lavcopts vcodec=mpeg1video -fps 25 -oac\<br/>
+ mp3lame -o test.mpg spiel1_teil_ungeschnitten.wmv<br/>
+
+das wichtige dabei ist -fps 25, wmv hat<br/>
+andscheinend sowas wie ne dynamische framerate und mpeg kann das halt<br/>
+ned  :-) <br/>
+
+<br/>
+<h2>Tastenk&#252;rzel f&#252;r mplayer</h2>
+<br/>
+v disable subtitles<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

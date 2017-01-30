@@ -1,0 +1,15 @@
+
+title: Backup von einem Server auf den Privatrechner
+author: abma
+date: 03-01-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Da ich gerne zusätzlich ein Backup von meinem Server auf meinem Rechner mache und nicht nur auf dem Rechenzentrum sichere habe ich mir ein Script ausgedacht, was folgendes erfüllt:</p><ul><li>Das Backup soll jederzeit starten können, also unabhängig davon, wann ich den Rechner eingeschaltet habe</li><li>maximal alle 24 Stunden wird ein Backup gemacht</li><li>Es sollen nur geänderte Dateien kopiert werden</li><li>/tmp, /var/tmp usw. soll nicht gesichert werden</li><li>Die Geschwindigkeit soll gedrosselt sein, damit es im Hintergrund laufen kann</li><li>Alte Backup-stände sollen erhalten bleiben und nur manuell gelöscht werden</li></ul><p>Das Script das das alles erfüllt ist erstaunlich kurz, dank rsync:</p><blockquote><p>#!/bin/sh<br /><br />BACKUPDIR=/path/to/backup<br />LOCKFILE=/path/to/.backup.lock<br />BACKUPCUR=$BACKUPDIR/current<br />BACKUPDATE=$BACKUPDIR/`date +&quot;%d.%m.%Y_%H-%M-%S&quot;`<br />EXCLUDE=&quot;--exclude=/tmp \<br />--exclude=/var/tmp \<br />--exclude=/usr/portage \<br />--exclude=/usr/src \<br />--exclude=/proc \<br />--exclude=/list+found \<br />--exclude=/var/lib/clamav/ \<br />--exclude=/var/log/&quot;<br /><br />MAXSECSOLD=$((24*60*60))<br />KBLIMIT=200<br /><br />if [ &quot;$1&quot; == &quot;--force&quot; ] ; then<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo -n<br />elif ! [ &quot;$(( $(date +&quot;%s&quot;) - $(stat -c &quot;%Y&quot; $LOCKFILE) ))&quot; -gt &quot;$MAXSECSOLD&quot; ];<br />then&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit 0;<br />fi<br />flock -n $LOCKFILE nice rsync -avz --delete --delete-excluded --bwlimit=$KBLIMIT -e ssh root@abma.de:/ $BACKUPCUR $EXCLUDE --backup --backup-dir=$BACKUPDATE<br />touch $LOCKFILE<br />touch $BACKUPCUR<br />&nbsp;</p></blockquote><p>Kurz zur Erklärung:</p><p>es wird überprüft, ob der Parameter --force angegeben wurde, wenn ja wird das Backup ausgeführt. Wenn nicht wird überprüft die letzte Änderung von LOCKFILE&nbsp;weniger als MAXSECSOLD Sekunden her ist, wenn ja wird das Script beendet.</p><p>Dann wird das lockfile erstellt, damit das script /&nbsp;der rsync nur einmal gestartet wird und der rsync mit niedriger Priorität gestartet.</p><p>Nach dem Backup wird das Änderungsdatum des Lockfile und des Backup-Verzeichnisses auf die Aktuelle Zeit gesetzt.</p><p>In BACKUPDIR/current befindet sich das aktuellste Backup, in BACKUPDIR/uhrzeit sind die Dateien, die seit dem letzten Backup geändert worden sind.</p><p>Der einzig große Nachteil ist:&nbsp;Sollte man das Backup doch einmal benötigen, muss man über die vermutlich langsame Internetanbindung die Dateien hochladen, was u.u. sehr Lange dauern kann, von daher ist noch zusätzlich ein Backup beim Hoster zu empfehlen.</p><p>Noch zu empfehlen wäre, wenn eine Datenbank mit gesichert wird, diese zu beenden und dann dieses Verzeichnis extra zu kopieren, oder einen sql-dump zu machen.</p><p>Das Script liegt im Verzeichnis /etc/cron.hourly/.</p>
+
+{% endfilter %}
+{% endblock %}

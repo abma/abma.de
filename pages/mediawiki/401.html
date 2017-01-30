@@ -1,0 +1,259 @@
+
+title: Shell
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Bootbare Backup/Rescue CD erstellen</h2>
+(erstellt eine bootbare rescue-cd mit hilfe von mondoarchive)<br/>
+
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ <br/>
+ LOG="nohup.out"<br/>
+ if [ $# == 0 ] ;<br/>
+ then<br/>
+         echo Creating backup in background... type killall mondoarchive to stop<br/>
+         echo "Backup started!" >$LOG<br/>
+         date >>$LOG<br/>
+         nohup sh $0 nofork >/dev/null &<br/>
+         exit 0<br/>
+ fi<br/>
+ <br/>
+<ol class="mediawiki">
+<li>Paths to exclude from backup</li>
+</ol>
+ EXCLUDE="/home/backup /var/spool/squid /tmp /var/tmp /root/images \<br/>
+ /var/cache/apt/archives /usr/src/linux"<br/>
+<ol class="mediawiki">
+<li>Backup Path</li>
+</ol>
+ DATE=`date --iso-8601=date`<br/>
+ BACKUPPATH="/home/backup/public_html/$DATE"<br/>
+<ol class="mediawiki">
+<li>kernel path</li>
+</ol>
+ KERNELPATH="/boot/bzImage"<br/>
+<ol class="mediawiki">
+<li>isosize</li>
+</ol>
+ ISOSIZE=700m<br/>
+<ol class="mediawiki">
+<li>bootloader GRUB|LILO</li>
+</ol>
+ LOADER="GRUB"<br/>
+ MBR="/dev/hda"<br/>
+ <br/>
+<ol class="mediawiki">
+<li>general parameter (-O for backup, -i for iso files)</li>
+</ol>
+ PARAMS=" -O -i "<br/>
+ echo backup to $BACKUPPATH >>$LOG<br/>
+ <br/>
+ rmdir $BACKUPPATH 2>&1 >>$LOG<br/>
+ if mkdir $BACKUPPATH 2>&1 >>$LOG;<br/>
+ then<br/>
+ nice -n 19 time mondoarchive $PARAMS -E "$EXCLUDE" -d $BACKUPPATH \<br/>
+ -k $KERNELPATH -s "$ISOSIZE" -F -l $LOADER -f  $MBR 2>&1 >>$LOG<br/>
+ <br/>
+ date>>$LOG<br/>
+ RESULT=`cat $LOG`<br/>
+ echo -e "Subject: Backup finished\nTo:matze\n\n$RESULT\n\n--\nYou can download\<br/>
+ it from  https://proxy.lan/~backup/$DATE\n\n"|sendmail root<br/>
+ fi<br/>
+ mv $LOG /tmp<br/>
+
+<h2>Screenshot mit Thumbnails automatisch erstellen</h2>
+(z.B. um Bilder in public_html/ zu erstellen)<br/>
+
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+<li>erzeugt einen screenshot incl. thumnails</li>
+</ol>
+ <br/>
+ maketn(){<br/>
+<ol class="mediawiki">
+<li> thumbnails erstellen:</li>
+</ol>
+         for i in *.png; do<br/>
+                 tnfile=`basename $i .png`_tn.jpg<br/>
+<ol class="mediawiki">
+<li>use imagemagick convert for the thumbnails</li>
+</ol>
+                 if ! [ -f $tnfile ]; then<br/>
+                         convert $i -geometry 120x120\! $tnfile<br/>
+                 fi<br/>
+         done<br/>
+ }<br/>
+ <br/>
+ <br/>
+ cd ~/public_html/shots/<br/>
+ if [ "$1" == "tn" ]; then<br/>
+         maketn<br/>
+         exit 0<br/>
+ fi<br/>
+ <br/>
+ filename=screenshot_`date +"%d.%m.%G_%H-%M"`.png<br/>
+ if ! [ -f $filename ]; then<br/>
+         xwd -frame -root -silent | convert xwd:- $filename<br/>
+         maketn<br/>
+ else<br/>
+         echo "file already exists!" <br/>
+         beep.sh<br/>
+ fi<br/>
+
+<h2>MD5-Pr&#252;fsumme automatisch erstellen / &#252;berpr&#252;fen</h2>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+<li>md5sum automatisch erstellen / &#239;&#191;&#189;berpr&#239;&#191;&#189;fen</li>
+</ol>
+ if [ -e MD5SUM ] ;then<br/>
+         md5sum -c MD5SUM<br/>
+ else<br/>
+         if (($#>0)); then<br/>
+                 md5sum $@ >MD5SUM<br/>
+         else<br/>
+                 echo Usage: $0 filenames to create MD5SUM from, if already exists, MD5SUM is checked.<br/>
+         fi<br/>
+ fi<br/>
+
+<h2>DVD "on the fly" brennen</h2>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ if [ "$2" == "" ] ;then<br/>
+         echo Usage: $0 pathtoburn label<br/>
+         exit 1<br/>
+ fi<br/>
+ <br/>
+<ol class="mediawiki">
+<li>s is needed on the end (this is no typo!)</li>
+</ol>
+ tsize=`mkisofs -J -print-size -V "$2" "$1" 2>/dev/null 0>/dev/null`s<br/>
+ <br/>
+ echo -e "\n"<br/>
+ echo tsize=$tsize<br/>
+ du -hs $1<br/>
+ echo Volume label: $2<br/>
+ echo press STRG+C to abort!<br/>
+ echo -e "\n\n\n"<br/>
+ mkisofs -J -V "$2" "$1" 2>/dev/null | cdrecord-wrapper.sh -v -dao -tsize $tsize -<br/>
+
+<h2>Wichtige Verzeichnisse sichern</h2>
+<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ <br/>
+<ol class="mediawiki">
+<li>absolute paths from / without leading '/'  backup specified dirs</li>
+</ol>
+ DIRS="etc var/lib/mysql var/lib/portage var/lib/openldap-data \<br/>
+ var/lib/openldap-slurp var/lib/openldap-ldbm scripts  usr/src/linux/.config"<br/>
+ FILE=/home/backup/system/`date +"%d.%m.%G_%H-%M-%S"`.tar.bz2<br/>
+ <br/>
+ <br/>
+ tar -cf - -C / $DIRS |bzip2 -9 -c >$FILE<br/>
+
+<h2>Datum aktualisieren / synchronisieren</h2>
+<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ ntpdate ntp1.ptb.de ntp0.fau.de ntp1.fau.de ntp2.fau.de |logger<br/>
+
+<h2>Passw&#246;rter automatisch erstellen</h2>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ <br/>
+ if [ ! -e pwds.txt ]; then<br/>
+         cat adressen.txt |xargs -n2 sh -c 'echo $0.$1 `pwgen -c -n 8 1`'>pwds.txt<br/>
+ else<br/>
+         echo pwds.txt already exists<br/>
+ fi<br/>
+
+<h2>List all remote connected ips</h2>
+<br/>
+ netstat -tan |grep -o -E "[0-9]+.[0-9]+.[0-9]+.[0-9]+:[0-9]+" |grep 192.168.1.2 -v<br/>
+
+where 192.168.1.2 is local ip<br/>
+
+without ports add this at the end<br/>
+&nbsp;</td>
+<td>sed -e "s:\([:][0-9]*\)::g"<br/>
+(replaces : and all digits behind)<br/>
+
+<h2>Pop3 nach Imap sync/weiterleitung</h2>
+Problem war: neue email, aber alte wird noch f&#252;r empfang verwendet, kann aber emails nicht weiterleiten.<br/>
+Verwendet werden die programme getmail und isync. das script wird von cron alle 10 minuten aufgerufen.<br/>
+
+Der pgrep aufruf verhindert dass das script mehrfach l&#228;uft wenn das Script z.B. l&#228;nger als 10 Minuten braucht. Das kann bei 24 MB (!!!) grossen Emails schon mal vorkommen.<br/>
+
+crontab:<br/>
+<ul class="mediawiki">
+<li>/10 * * * * ! pgrep sync.sh >/dev/null && /home/tonline/sync.sh</li>
+<br/>
+</ul>
+/home/tonline/sync.sh:<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ msgcount=`getmail -g /home/tonline/getmail/ |grep Retrieved|awk '{print $5}'`<br/>
+ if [ "$msgcount" == "" ] || [ "$msgcount" == "0" ];<br/>
+ then <br/>
+<ol class="mediawiki">
+<li>echo no new mail</li>
+</ol>
+         exit 1<br/>
+ else<br/>
+<ol class="mediawiki">
+<li>echo new mail arrived</li>
+</ol>
+         yes|isync  -a -c /home/tonline/isync/isyncrc>/dev/null<br/>
+ fi<br/>
+
+/home/tonline/getmail/getmailrc:<br/>
+ [default]<br/>
+ verbose = 1 <br/>
+ readall = 1 <br/>
+ delete = 1 <br/>
+ message_log = /home/tonline/getmail.log<br/>
+ <br/>
+ [retriever]<br/>
+ server = pop.t-online.de<br/>
+ username = popuser<br/>
+ port = 110<br/>
+ password = xxx<br/>
+ postmaster = /home/tonline/Maildir/ <br/>
+
+/home/tonline/isync/isyncrc:<br/>
+ Expunge no<br/>
+ Delete no <br/>
+ CopyDeletedTo "Trash"<br/>
+ <br/>
+ Mailbox /home/tonline/Maildir<br/>
+ Host imaps:imap.server.com<br/>
+ Port 993<br/>
+ User imapusername<br/>
+ Pass imapwassword<br/>
+ CertificateFile /home/tonline/isync/cert<br/>
+<h2>String z.B. 0101010 in bin&#228;r umwandeln</h2>
+ echo -e "\\$((2#01001110))"<br/>
+
+<h2>Inhalt von Dateien ausgegen</h2>
+ find  -exec cat {} \;<br/>
+
+<h2>dateiliste mit leerzeichen l&#246;schen</h2>
+ cat rm |sed 's/ /\\ /g'|xargs rm<br/>
+
+<a href="/">Kategorie:Linux</a> <a href="/">Kategorie:Scripting</a>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,60 @@
+
+title: Apache
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Zugriffsrechte</h2>
+<br/>
+Einstellungen f&#252;r ein Verzeichnis: <a href="/">Apache:.htaccess</a>
+<h2>php im reponse tag des http headers verstecken</h2>
+(nur wenn php als modul l&#228;uft)<br/>
+
+php.ini:<br/>
+
+ ; Decides whether PHP may expose the fact that it is installed on the server<br/>
+ ; (e.g. by adding its signature to the Web server header). It is no security<br/>
+ ; threat in any way, but it makes it possible to determine whether you use PHP<br/>
+ ; on your server or not.<br/>
+ expose_php = Off<br/>
+
+<h2>Produktversion von Apache Verstecken</h2>
+<br/>
+apache.conf: <br/>
+ ServerTokens ProductOnly<br/>
+
+<h2>php als cgi</h2>
+<br/>
+apache.conf:<br/>
+
+ AddHandler application/x-httpd-php .php<br/>
+ Action application/x-httpd-php /cgi-bin/php4<br/>
+
+ LoadModule action_module /usr/lib/apache/1.3/mod_actions.so<br/>
+
+<h2>Apache in homedir installieren</h2>
+<br/>
+apache runterladen, entpacken<br/>
+
+  ./configure --prefix=/home/USER/apache/ --exec-prefix=/home/USER/apache/<br/>
+ make<br/>
+ make install<br/>
+
+f&#252;r php im homedir das selbe<br/>
+
+httpd.conf<br/>
+
+ AddHandler? php4-script .php<br/>
+ Action php4-script /cgi-bin/php<br/>
+
+im ordner cgi-bin/ muss php sein<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

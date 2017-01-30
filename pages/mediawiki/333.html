@@ -1,0 +1,20 @@
+
+title: Dovecot
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Dovecot ssl Zertifikat erstellen</h2>
+ cd /etc/ssl/dovecot<br/>
+ openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650<br/>
+ <br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

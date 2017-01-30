@@ -1,0 +1,116 @@
+
+title: nslookup
+author: abma
+date: 24-11-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<form method="post" action="<?php echo $self ?>">
+<input name="ip" value="<?php $ip=long2ip(ip2long($_REQUEST['ip'])); if ($ip=="0.0.0.0"){ $ip=$_SERVER['REMOTE_ADDR'];} echo $ip;?>"/>
+<input type="submit" value="aktualisieren"/>
+</form>
+<?php
+if ($ip!=""){
+$ip_r=gethostbyname($ip);
+$record=@dns_get_record($ip,DNS_ALL);
+echo "<table>";
+echo '<tr><td>Hostname</td><td>type</td></tr>';
+if (is_array($record))
+for($i=0;$i<count($record);$i++){
+echo "<tr>";
+while (list($name,$value)=each($record[$i])){
+echo "<td>".$name.": ".$value."</td>";
+}
+echo "</tr>";
+}
+echo "</table>";
+echo "lookup: ".$ip_r;
+if ($ip_r!="")
+echo "<br/>\nreverse lookup: ".gethostbyaddr($ip_r);
+}
+
+function get_location($ip){
+$url= "http://api.hostip.info/get_html.php?ip=$ip&position=true";
+$str= file_get_contents($url);
+
+
+$arr=array();
+$vals=array("Country", "City", "Latitude", "Longitude");
+
+foreach ($vals as $val) {
+$start=strpos($str,$val)+strlen($val)+2;
+$end=strpos($str,"\n",$start);
+if ($end===false)
+$end=strlen($str);
+$arr[$val]=substr($str,$start,$end-$start);
+}
+$lang=$arr["Country"];
+$start=strpos($lang, "(")+1;
+$end=strpos($lang, ")");
+
+$arr['LANG']=substr($lang,$start,$end-$start);
+return $arr;
+}
+
+
+function weather($city, $lang){
+
+$api = "http://www.google.com/ig/api?weather=".urlencode($city)."&hl=".urlencode($lang);
+$data = file_get_contents($api);
+$data = utf8_encode($data);
+$wetter = simplexml_load_string($data);
+
+if (!$wetter)
+return array();
+$res=array();
+
+if (array_key_exists("problem_cause",$wetter->weather))
+return array();
+
+$res["wind"]=$wetter->weather->current_conditions->wind_condition->attributes()->data;
+$res["temp"]=$wetter->weather->current_conditions->temp_c->attributes()->data;
+$res["humidity"]=$wetter->weather->current_conditions->humidity->attributes()->data;
+$res["humidity"]=$wetter->weather->forecast_conditions->condition->attributes()->data;
+
+return $res;
+}
+ 
+/*  
+
+$loc=get_location($ip);
+echo "<br/>";
+echo $loc["City"];
+echo "<br/>";
+echo $loc["Country"];
+echo "<br/>";
+
+$weather=weather($loc["City"], $loc["LANG"]);
+echo "<br/>";
+echo $weather["wind"]." km/h";
+echo "<br/>";
+echo $weather["temp"]." °C";
+echo "<br/>";
+echo $weather["humidity"];
+echo "<br/>";
+
+*/
+
+
+echo "</pre><br/>";
+
+/*
+$url="http://maps.google.de/?&ll=".$loc["Latitude"].",".$loc["Longitude"];
+echo "<a href=\"$url\">location</a>";
+<a href="http://www.hostip.info">
+ <img src="http://api.hostip.info/flag.php" border="0" alt="IP Address Lookup"/>
+</a>
+
+*/
+?>
+
+{% endfilter %}
+{% endblock %}

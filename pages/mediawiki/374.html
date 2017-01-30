@@ -1,0 +1,42 @@
+
+title: NASM
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>NASM</h2>
+<br/>
+Source: http://docs.cs.up.ac.za/programming/asm/derick_tut/quickstart.html<br/>
+
+  SECTION .DATA<br/>
+    hello:     db 'Hello world!',10<br/>
+    helloLen:  equ $-hello<br/>
+
+  SECTION .TEXT<br/>
+    GLOBAL _start<br/>
+
+  _start:<br/>
+
+    ; Write 'Hello world!' to the screen<br/>
+    mov eax,4            ; 'write' system call<br/>
+    mov ebx,1            ; file descriptor 1 = screen<br/>
+    mov ecx,hello        ; string to write<br/>
+    mov edx,helloLen     ; length of string to write<br/>
+    int 80h              ; call the kernel<br/>
+
+    ; Terminate program<br/>
+    mov eax,1            ; 'exit' system call<br/>
+    mov ebx,0            ; exit with error code 0<br/>
+    int 80h              ; call the kernel<br/>
+
+&#220;bersetzen und Linken:<br/>
+  nasm -f elf hello.asm<br/>
+  ld -s -o hello hello.o /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/crtn.o -lc -dynamic-linker /lib/ld-linux.so.2
+
+{% endfilter %}
+{% endblock %}

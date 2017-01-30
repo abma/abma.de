@@ -1,0 +1,109 @@
+
+title: DSL-Router
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Versatel Admin router Passwort zur&#252;cksetzen</h2>
+<br/>
+Standard Ip-Adresse ist 150.150.150.4. (M&#246;chte ja wissen wem die eingefallen ist...)<br/>
+
+Dazu wird das normale Benutzerpasswort ben&#246;tigt. (Benutzername=user/Standardpassword=password)<br/>
+
+Getestet mit Firmware Version:	CX82xxx_4.1.0.9<br/>
+
+Customer Software Version:	4.1.0.9(B)_TEN_02<br/>
+
+Das ist der Standard Versatel Router.<br/>
+Einfach einloggen und dann diese Url aufrufen:<br/>
+
+ http://192.168.1.100/doc/pwduser.htm?WINDWEB_URL=%2Fdoc%2Fpwdadmin.htm&verify_pwd=test&admin_pwd=test<br/>
+
+dann ist das admin passwort test.<br/>
+
+<h2>Conexant Passwort entschl&#252;sseln</h2>
+<br/>
+In der Datei ftp://192.168.1.100/factory.reg befinden die eintr&#228;ge zum passwort:<br/>
+ "LoginUserPassword"="&#194;&#176;&#239;&#191;&#189;&#239;&#191;&#189;&#206;&#180;&#239;&#191;&#189;&#239;&#191;&#189;"<br/>
+ "LoginAdminPassword"="&#202;&#176;&#239;&#191;&#189;o&#239;&#191;&#189;h}~"<br/>
+
+diese sind offensichtlich verschl&#252;sselt.<br/>
+
+Es scheint jedoch nur eine verschiebung der einzelnen Buchstaben um einen konstanten wert verwendet zu werden.<br/>
+Daf&#252;r ein kleines Delphi-programm (f&#252;r verbesserungsvorschl&#228;ge bin ich immer offen :-)<br/>
+(Delphi programm)<br/>
+
+<h2>Crypt programm in pascal</h2>
+ program DecryptConexantPassword;<br/>
+ <br/>
+ const<br/>
+ //d='&#194;&#176;&#239;&#191;&#189;&#239;&#191;&#189;&#206;&#180;&#239;&#191;&#189;&#239;&#191;&#189;';  //password<br/>
+ d='&#202;&#176;&#239;&#191;&#189;o&#239;&#191;&#189;h}~'; //xad$l#12<br/>
+ //d='&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;';//(64*a)\  <br/>
+                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+ <br/>
+ const verschiebung:array[1..64] of word= (<br/>
+ 82,79,67,75,87,69,76,76,83,69,77,73,67,79,78,68,85,67,84,79,82,82,79,67,75,87,69,<br/>
+ 76,76,83,69,77,73,67,79,78,68,85,67,84,79,82,82,79,67,75,87,69,76,76,83,69,77,<br/>
+ 73,67,79,78,68,85,67,84,79,82,82);<br/>
+ <br/>
+ var i:integer;<br/>
+ begin<br/>
+     for i:=1 to length(d) do begin<br/>
+         write(char(ord(d[i])-verschiebung[i]));<br/>
+     end;<br/>
+     readln;<br/>
+ end.<br/>
+<h2>Crypt programm in c</h2>
+das selbe noch in c, nur viel besser, kann sogar verschl&#252;sseln! :-)<br/>
+mit <br/>
+  gcc main.c -o crypt<br/>
+compilieren.<br/>
+
+Ich hab leider noch keine idee wie man die Konstante berechnen k&#246;nnte... :-/<br/>
+
+main.c:<br/>
+ const short verschiebung [] = { 82,79,67,75,87,69,76,76,83,69,77,73,67,79,78,68,85,67,84,79,82};<br/>
+ <br/>
+ //char c[]="&#194;&#176;&#239;&#191;&#189;&#239;&#191;&#189;&#206;&#180;&#239;&#191;&#189;&#239;&#191;&#189;"; //=password<br/>
+ //char c[]="&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;&#239;&#191;&#189;"; //=64*a<br/>
+ int main(int *argc, char*argv[]){<br/>
+         int i,m;<br/>
+         if ((int)argc!=3){<br/>
+                 printf("usage %s [d|e] string\n",argv[0]);<br/>
+                 printf("   d dencrypt\n");<br/>
+                 printf("   e encrypt\n");<br/>
+                 return 1;<br/>
+         }<br/>
+         if (argv[1][0]=='d'){<br/>
+                 m=-1;<br/>
+         }else<br/>
+                 m=1;<br/>
+         for(i=0;i<strlen(argv[2]);i++){<br/>
+                 printf("%c",(argv[2][i]+m*verschiebung[i % 21])%256);<br/>
+         }<br/>
+         printf("\n");<br/>
+         return 0;<br/>
+ }<br/>
+
+<h2>Teledat 331 LAN telnet passwort</h2>
+Vorgehensweise Teledat 331 LAN :<br/>
+
+Gib der Netzwerkkarte an der das Modem h&#228;ngt folgende IP 192.168.212.216<br/>
+
+Ping auf 192.168.212.212 ====> erfolgreich???<br/>
+
+wenn ja dann telnet 192.168.212.212 64113<br/>
+
+Konsole &#246;ffnet sich und Du gibst folgendes Passwort ein: tifdto<br/>
+
+<br/>
+<a href="/">Kategorie:Allgemeines</a>
+
+{% endfilter %}
+{% endblock %}

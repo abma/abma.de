@@ -1,0 +1,39 @@
+
+title: Programmieren
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<a href="/">Makefile</a>
+<h2>Beispiele</h2>
+<br/>
+<ul class="mediawiki">
+<li><a href="/">Crypt Programm in Delphi</a></li>
+<li><a href="/">Crypt Programm in C</a></li>
+<li><a href="/">Opengl</a></li>
+<li><a href="/">Gtk</a></li>
+<li><a href="/">gdb</a></li>
+<li><a href="/">HTML</a></li>
+<li><a href="/">Programm um shellscript im hintergrund zu starten</a></li>
+<li><a href="/">Cvs</a></li>
+<li><a href="/">Quake</a></li>
+<li><a href="/">Ackermannfunktion</a></li>
+<li><a href="/">NASM</a></li>
+<br/>
+</ul>
+<h2>Links</h2>
+<ul class="mediawiki">
+<li>http://www-ccs.ucsd.edu/c/ C-Tutorial (english)</li>
+<li>http://www.cs.cf.ac.uk/Dave/C/CE.html C-Tutorial (linux bezogen)</li>
+<li>http://www.c-plusplus.de/forum/ Programmiererforum</li>
+<br/>
+</ul>
+<a href="/">Kategorie:Programmieren</a>
+
+{% endfilter %}
+{% endblock %}

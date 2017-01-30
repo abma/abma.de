@@ -1,0 +1,74 @@
+
+title: Shellscripte
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2> Screenshot mit Thumbnail erstellen</h2>
+<br/>
+convert wird von dem paket <a href="http://www.imagemagick.org/">ImageMagick</a> bereitgestellt.<br/>
+
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+<li>erzeugt einen screenshot incl. thumnails</li>
+</ol>
+ <br/>
+ maketn(){<br/>
+<ol class="mediawiki">
+<li> thumbnails erstellen:</li>
+</ol>
+        for i in *.png; do<br/>
+                tnfile=`basename $i .png`_tn.jpg<br/>
+<ol class="mediawiki">
+<li>use imagemagick convert for the thumbnails</li>
+</ol>
+                if ! [ -f $tnfile ]; then<br/>
+                        convert $i -geometry 120x120\! $tnfile<br/>
+                fi<br/>
+        done<br/>
+ }<br/>
+ <br/>
+ <br/>
+ cd ~/public_html/shots/<br/>
+ if [ "$1" == "tn" ]; then<br/>
+        maketn<br/>
+        exit 0<br/>
+ fi<br/>
+ <br/>
+ filename=screenshot_`date +"%d.%m.%G_%H-%M"`.png<br/>
+ if ! [ -f $filename ]; then<br/>
+        xwd -frame -root -silent | convert xwd:- $filename<br/>
+        maketn<br/>
+ else<br/>
+        echo "file already exists!" <br/>
+        beep.sh<br/>
+ fi<br/>
+
+<h2> Backup von einem Verzeichnis</h2>
+<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ <br/>
+<ol class="mediawiki">
+<li>backup specified dirs</li>
+</ol>
+ DIRS='/etc /var/lib/mysql /var/lib/portage'<br/>
+<ol class="mediawiki">
+<li>output file name</li>
+</ol>
+ FILE=/home/backup/systembackup`date +"%d.%m.%G_%H-%M-%S"`.tar.bz2<br/>
+ <br/>
+ <br/>
+ tar -cvvf - $DIRS |bzip2 -9 -c >$FILE<br/>
+
+<br/>
+<a href="/home/wiki/Kategorie: Linux">Kategorie: Linux</a>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,19 @@
+
+title: Install libreoffice in Ubuntu 10.04 LTS
+author: abma
+date: 03-02-2011
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+to install libreoffice in Ubunto 10.04 you need to type:
+
+     sudo add-apt-repository ppa:libreoffice/ppa
+     sudo apt-get update
+     sudo apt-get install libreoffice libreoffice-core libreoffice-base libreoffice-filter-mobiledev libreoffice-java-common libreoffice-common libreoffice-gnome
+
+{% endfilter %}
+{% endblock %}

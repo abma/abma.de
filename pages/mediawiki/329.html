@@ -1,0 +1,30 @@
+
+title: Cvs
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Einen patch erstellen</h2>
+ <br/>
+ cvs diff -N -u <br/>
+oder<br/>
+  diff -r -N -u olddir newdir<br/>
+
+(depending on whether you're working from CVS files or not).<br/>
+
+The -N shows new files.  And you can add "diff -u" to ~/.cvsrc so you<br/>
+don't have to include it every time, because all diffs should be in<br/>
+unified format.<br/>
+ <br/>
+List the original dir first or you will generated a reverse patch.  See<br/>
+"man diff" for lots more useful switches.<br/>
+
+siehe auch http://drupal.org/diffandpatch
+
+{% endfilter %}
+{% endblock %}

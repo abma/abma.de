@@ -1,0 +1,19 @@
+
+title: Xen 3.1.1 released
+author: abma
+date: 13-10-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Ein <a href="http://lists.xensource.com/archives/html/xen-announce/2007-10/msg00001.html">bugfix-release</a> von xen wurde veröffentlicht. Ich werde die Version in den nächsten Tagen mal testen, in der Hoffnung, dass der <a href="http://bugzilla.xensource.com/bugzilla/show_bug.cgi?id=1038">qemu-dm segfault</a> beseitigt wurde.
+
+Leider gibt es bis jetzt nur den Quellcode im Repository, aber im laufe der Woche wird es wohl auch Pakete mit dem Quellcode geben.
+
+Update: Jipiee, der bug scheint beseitigt zu sein! :)
+
+{% endfilter %}
+{% endblock %}

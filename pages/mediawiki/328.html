@@ -1,0 +1,20 @@
+
+title: Cups
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Drucker installieren</h2>
+<p>ppd von http://www.linuxfoundation.org/collaborate/workgroups/openprinting downloaden und in /usr/share/cups/model kopieren. cups neu starten und dann http://localhost:631/ aufrufen und installieren.<br />
+</p>
+<h2>Links</h2>
+<p><br />
+http://www.gentoo.de/doc/de/quick-samba-howto.xml (cups samba howto)</p>
+
+{% endfilter %}
+{% endblock %}

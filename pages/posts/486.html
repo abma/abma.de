@@ -1,0 +1,25 @@
+
+title: How to check if windows system is 32 or 64 bit in batch/cmd file
+author: abma
+date: 24-05-2012
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+       echo "System is 32 bit"
+   ) else (
+      echo "System is 64 bit"
+   )
+
+There are some other solutions, too, but this seems to be the most efficient. This way only works, if you are using the 64 bit cmd.exe:
+http://stackoverflow.com/questions/1738985/why-processor-architecture-always-returns-x86-instead-of-amd64
+
+Microsoft has a solution, too, but it required to create a temp-file:
+http://support.microsoft.com/kb/556009/en-us
+
+{% endfilter %}
+{% endblock %}

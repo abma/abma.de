@@ -1,0 +1,15 @@
+
+title: Wget
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>PDFs aus einem dateilisting in den ordner files herunterladen</h2><p>wget -r -L -nH -nd --execute robots=off -P files -APDF http://example.com/dir1/dir2/</p>
+
+{% endfilter %}
+{% endblock %}

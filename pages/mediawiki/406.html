@@ -1,0 +1,15 @@
+
+title: Squid:proxy.pac
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Example Proxy.Pac</h2><p>(Autoconfiguration file for Proxy Settings in Netscape/Firefox/Internet Explorer/...)<br />   function FindProxyForURL(url, host)<br />  {<br />          if (isInNet(host, &quot;192.168.0.0&quot;,&quot;255.255.255.0&quot;) || (isInNet(host,&quot;127.0.0.1&quot;,0))){<br />                  return &quot;DIRECT&quot;;<br />          } else {<br />                  return &quot;PROXY proxy.lan:8080;&quot; <br />          }<br />  }<br />  <br /><a href="/"><br /></a></p>
+
+{% endfilter %}
+{% endblock %}

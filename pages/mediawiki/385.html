@@ -1,0 +1,42 @@
+
+title: Pearpc
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h1>Pearpc</h1>
+<br/>
+<h2>wie bekomme ich netzwerk an den start?</h2>
+<br/>
+ppc.conf<br/>
+ pci_rtl8139_installed = 1 <br/>
+ pci_rtl8139_mac = "de:ad:ca:fe:12:35"<br/>
+
+scripts/ifppc_up<br/>
+ echo UID=$UID<br/>
+ PPC_NETMASK="255.255.255.0"<br/>
+ PPC_HOST_IP="192.168.10.80"<br/>
+ PPC_CLIENT_IP="192.168.10.1"<br/>
+ /sbin/ifconfig ppc $PPC_HOST_IP netmask $PPC_NETMASK up &&\<br/>
+ /sbin/iptables -t nat -s $PPC_CLIENT_IP -A POSTROUTING -j MASQUERADE &&\<br/>
+ echo 1 > /proc/sys/net/ipv4/ip_forward<br/>
+
+und dann noch macosx auf die ip 192.168.10.1 konfigurieren! (dann noch den echten dns-server/proxy-server eintragen)<br/>
+
+<h1>tipps zu macosx</h1>
+<br/>
+<h2>wo finde ich die konsole?</h2>
+<br/>
+finder->gehe zu->dienstprogramme->terminal<br/>
+
+<h2>wie werde ich root?</h2>
+<br/>
+ sudo bash
+
+{% endfilter %}
+{% endblock %}

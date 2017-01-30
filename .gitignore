@@ -1,0 +1,4 @@
+/config.py
+/.deploy
+/.build
+*.pyc

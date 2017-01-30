@@ -1,0 +1,15 @@
+
+title: ReactOS Audit zu 2/3 fertig
+author: abma
+date: 06-04-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Die Durchsicht des <a href="http://www.reactos.org/">ReactOS</a>-Quellcodes ist zu 2/3 fertig.  Der Audit wird nun parallel zur weiterentwicklung durchgeführt. Wenn eine bestehende Datei die noch nicht auf kopierten Quellcode untersucht worden ist, im SVN verändert werden soll, dann wird diese gesperrt und erst wieder freigegeben, wenn der Quellcode überprüft wurde. Deswegen kann auch der aktuelle SVN-Quellcode runtergeladen und <a href="/wiki/reactos">getestet</a> werden.  Wenn die Geschwindigkeit beibehalten wird, ist die Audit in ca. 2 Monaten beendet.</p>
+
+{% endfilter %}
+{% endblock %}

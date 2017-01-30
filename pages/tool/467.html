@@ -1,0 +1,15 @@
+
+title: markdown
+author: abma
+date: 18-06-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+None
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,15 @@
+
+title: Ausgabe in Console farbig machen
+author: abma
+date: 01-12-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Um Text auf der Konsole farbig zu machen eignet sich folgendes einfache Script:</p> <blockquote> #!/bin/sh<br /> red=$(tput setaf 1) normal=$(tput sgr0)<br /> WORD=&quot;suchwort&quot;<br /> cat protokolldatei.log |sed &quot;s/${WORD}/${red}${WORD}${normal}/g&quot; </blockquote> <p>Nützlich, wenn man Protokolldateien anschaut :)</p>
+
+{% endfilter %}
+{% endblock %}

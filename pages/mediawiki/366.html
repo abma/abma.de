@@ -1,0 +1,23 @@
+
+title: Locales
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>locales under debian</h2>
+(wenn z.b. gettext also &#220;bersetzungen in squirelmail nicht funktionieren)<br/>
+
+ apt-get install localeconf and locales<br/>
+ dpkg-reconfigure locales<br/>
+ dpkg-reconfigure localeconf<br/>
+
+<br/>
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,139 @@
+
+title: Windows/General
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>xp example filesystem driver</h2>
+<br/>
+http://www.acc.umu.se/~bosse/<br/>
+
+<h2>Windows Remote Terminal &#252;ber Remote Registry aktivieren</h2>
+<br/>
+regedit starten. <br/>
+mit netzwerkregistrierung verbinden<br/>
+computer ausw&#228;hlen<br/>
+->
+ HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server<br/>
+
+ fDenyTSConnection<br/>
+
+auf 0 setzen<br/>
+
+rechner neu starten mit<br/>
+ shutdown -m \\srv220 -r<br/>
+
+<h2>Ordner als Laufwerk mounten</h2>
+<br/>
+das geht mit dem Windows-programm SUBST:<br/>
+ >subst<br/>
+<ul class="mediawiki">
+<li> Weist einem Pfad eine Laufwerkbezeichnung zu.</li>
+</ul>
+ <br/>
+ SUBST [Laufwerk1: [Laufwerk2:]Pfad]<br/>
+ SUBST Laufwerk1: /D<br/>
+ <br/>
+  Laufwerk1:       Laufwerkbezeichnung, die dem Pfad zugewiesen werden soll.<br/>
+  [Laufwerk2:]Pfad Laufwerk und Pfad, die durch Laufwerk1: angesprochen<br/>
+                   werden sollen.<br/>
+  /D               Hebt die Zuordnung f&#252;r das (virtuelle) Laufwerk1 wieder auf.<br/>
+ <br/>
+ SUBST ohne Parameter zeigt die mit SUBST erstellten, virtuellen Laufwerke an.<br/>
+
+<h2>"f&#252;r eine vorherige installation ist ein neustart" - ohne neustert</h2>
+<br/>
+ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager<br/>
+ PendingFileRenameOperations<br/>
+umbenennen<br/>
+
+ wininit.bak<br/>
+umbenennen<br/>
+ software\microsoft\windows\currentversion\runonce<br/>
+l&#246;schen<br/>
+
+<br/>
+<h2>"Out of Sync" wenn Spiel / DirectDraw-Anwendung gestartet wird</h2>
+<br/>
+XP/Win2k - How to Run Games at Refresh rates higher than 60Hz<br/>
+Under Win2k and XP you can force refresh rates for D3D games by doing the following...<br/>
+
+1. Go to Run and type dxdiag.<br/>
+
+2. Click on the More Help tab and click on the override button and type in the value... <br/>
+(for example 85 for 85Hz)<br/>
+
+<br/>
+
+<h2>Windows Remotedesktop &#252;ber ssh tunneln</h2>
+<br/>
+Dazu wird <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Putty</a> ben&#246;tigt.<br/>
+In den einstellungen unter Connection->ssh->tunnels<br/>
+ source port: 10000<br/>
+ destination: remoteserver:3389<br/>
+und dann auf add klicken.<br/>
+
+dann mit dem ssh server verbinden.<br/>
+dann den remotedesktop client starten und mit localhost:10000 verbinden.<br/>
+
+<h2>Fdisk gesucht</h2>
+<br/>
+unter windows xp gibt es kein fdisk mehr, ein &#228;quivalent dazu ist diskpart.<br/>
+
+<h2>Autorun f&#252;r CD/DVD deaktivieren</h2>
+Regedit &#246;ffnen, dann zum Registrierungsschl&#252;ssel<br/>
+ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Cdrom<br/>
+Erstellen Sie, falls nicht vorhanden, den<br/>
+ DWORD-Wert "AutoRun"<br/>
+und weisen Sie diesem den Wert "0" zu. <br/>
+
+<h2>Beschr&#228;nkung der TCP/IP-Verbindungen unter Windows XP SP2 aufheben</h2>
+(Ereignisskennung 4226 / Quelle TCPIP)<br/>
+
+Einfach unter<br/>
+ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters<br/>
+ein<br/>
+ (DWORD)<br/>
+ TcpNumConnections<br/>
+erstellen und dann als (hex)Wert fffffe eingeben.<br/>
+
+genaures siehe http://support.microsoft.com/default.aspx?scid=kb;en-us;314053<br/>
+
+<h2>F&#252;r was ist eine Partition mit dem Namen PQSERVICE</h2>
+Gr&#246;&#223;e ~2GB<br/>
+
+Name: PQSERVICE<br/>
+Gr&#246;&#223;e: 3 GB (1,7 GB belegt)<br/>
+Partitionstyp: FAT32<br/>
+
+Inhalt der Partition sind Recoverydaten, welche auch auf der Recovery-CD vorhanden sein sollten.<br/>
+
+<h2>Windows Messenger deinstallieren</h2>
+<br/>
+C:\WINDOWS\inf\sysoc.inf:<br/>
+ msmsgs=msgrocm. dll,OcEntry,msmsgs.inf,hide,7<br/>
+zu<br/>
+ msmsgs=msgrocm. dll,OcEntry,msmsgs.inf,,7<br/>
+&#228;ndern<br/>
+
+<h2>Datei/Verzeichnis mit Leerzeichen am Ende l&#246;schen</h2>
+<br/>
+rmdir bzw. del<br/>
+ "\\?\C:\pfad\zu\verzeichnis "<br/>
+
+<br/>
+<h2>Automatische Freigabe von Laufwerken vermeiden</h2>
+Regedit -> In dem Pfad <br/>
+ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters<br/>
+einen neuen Schl&#252;ssel des Typs DWORD erstellen mit dem Namen "AutoShareWks" f&#252;r NT/2K Workstation und "AutoShareServer" f&#252;r NT/2K Server.<br/>
+Den Wert auf 0 setzen und den Rechner neustarten, bzw. den Dienst "Server" neu starten.<br/>
+
+<a href="/">Kategorie:Windows</a>
+
+{% endfilter %}
+{% endblock %}

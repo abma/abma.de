@@ -1,0 +1,20 @@
+
+title: Git repository aufräumen / neu packen
+author: abma
+date: 23-03-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>mit dem Befehl</p>
+<blockquote>
+<p>git gc --auto</p>
+</blockquote>
+<p>wird ein git repository neu gepackt und optimiert. Bei mir wurde ein Repository von 43MB auf nur 16MB&nbsp;geschrumpft. Immerhin eine Platzersparnis von ~70%.</p>
+<p>Noch als Hinweis:&nbsp;das optimieren dauert wirklich lange weswegen ich den --auto parameter immer verwende, da dieser den optimierungsprozess nur startet, wenn das aufräumen notwendig ist!</p>
+
+{% endfilter %}
+{% endblock %}

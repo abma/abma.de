@@ -1,0 +1,17 @@
+
+title: Ntpdate
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Datum aktualisieren / synchronisieren</h2>
+<br/>
+ ntpdate ntp1.ptb.de ntp0.fau.de ntp1.fau.de ntp2.fau.de<br/>
+
+{% endfilter %}
+{% endblock %}

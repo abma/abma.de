@@ -1,0 +1,33 @@
+
+title: Howto compile xen-tools from xen-unstable
+author: abma
+date: 07-08-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Install mercurial (in gentoo "emerge mercurial"),
+download source:
+
+<blockquote>
+cd /tmp
+hg clone http://xenbits.xensource.com/xen-unstable.hg
+</blockquote>
+
+then compile the tools
+
+<blockquote>
+cd xen-unstable.hg
+make tools
+</blockquote>
+("make help" lists all avaiable options)
+
+the compiled xen-tools  are now in the subfolder dist/install.
+
+Parts of this info are from the <a href="http://www.cl.cam.ac.uk/research/srg/netos/xen/downloads.html">source code of xen homepage </a>
+
+{% endfilter %}
+{% endblock %}

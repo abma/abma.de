@@ -1,0 +1,15 @@
+
+title: Schnell mal Linux installieren oder testen?
+author: abma
+date: 19-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Um mal schnell eine fast beliebige Distribution zu installieren, ohne sich zuerst das komplette, meist ~700MB große Image aus dem Laden zu müssen, kann man <a href="http://boot.kernel.org/">GPXE</a> verwenden.</p><p>Mit dem Bootloader ist es möglich direkt aus dem Internet eine z.B. Ubuntu-Live-CD zu booten.  Vorausgesetzt wird natürlich eine bestehende Internetverbindung, über WLAN wird die Software vermutlich auch nicht ohne weiteres funktionieren.  Aber um mal kurz ein Ubuntu in eine Virtuellen Maschine zu installieren... dafür ist die Software ideal geeignet!</p><p>In einem kurzen Test habe ich eine Ubuntu-LiveCD gestartet, dabei wurden &quot;nur&quot; ~120MB übertragen bis das System gestartet war. Bei DSL, bei dem Virtualbox leider im Test abgestürzt ist, wäre die übertragene Datenmenge natürlich viel geringer, da das Image nur ~50MB gross ist.</p>
+
+{% endfilter %}
+{% endblock %}

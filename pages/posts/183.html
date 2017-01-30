@@ -1,0 +1,19 @@
+
+title: Howto force a disconnect network drive in Windows with net use /delete
+author: abma
+date: 17-03-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+There is an undocumented switch to force to disconnect a network drive:
+
+NET USE K: /DELETE /YES
+
+The /YES switch forces the disconnection, also if files are open, the disconnect succeeds without promting the user.
+
+{% endfilter %}
+{% endblock %}

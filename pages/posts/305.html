@@ -1,0 +1,15 @@
+
+title: daemon-tools for linux?
+author: abma
+date: 09-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>A long time ago i searched a tool to mount cd-images like .MDS .ISO .CUE with linux. There was none... only things like mount -o loop were avaiable.</p><p>Today i've found <a href="http://cdemu.sourceforge.net/">cdemu</a>: it does all i want, it only installs a very small kernel module to emulate a Virtual (SCSI) Host Bus Adapter, the rest is done in userspace.</p><p>There is also the small GUI gCDEmu to &quot;mount&quot; an image. It is a gnome-panel applet.  Thumbs up! :-)</p>
+
+{% endfilter %}
+{% endblock %}

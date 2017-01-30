@@ -1,0 +1,55 @@
+
+title: Handy
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Was mache ich wenn mir jemand eine V-Card aufs Handy geschickt hat und ich nur "Kurzmitteilung nicht darstellbar" auf dem Handy angezeigt bekomme?<br/>
+
+dann hilft vielleicht dieser Trick weiter: wenn die daten ausgelesen werden knnen, dann sollte man so etwas in der Art haben:<br/>
+
+2F2F53454F01690058542B8002000200C4000000....<br/>
+
+Die Daten sind komischerweise in Hex gespeichert, wenn man aus den Zeichen den Dezimalwert und aus dem Dezimalwert das Zeichen aus der Asciitabelle holt sieht das schon ganz anders aus, die daten sind jetzt in "Klartext". kleines php script dazu Ich habe den Hex-String dadurch bekommen in dem ich mir die SMS an Uboot geschickt habe.<br/>
+
+ <?php<br/>
+ if (isset($_GET["source"])){<br/>
+        show_source("hextochar.php");<br/>
+        exit;<br/>
+ }<br/>
+ <br/>
+ $text=$_REQUEST["text"];<br/>
+ print<<<EOF<br/>
+ <html>
+ <body>
+ <form action="hextochar.php" method="POST">
+ <textarea name="text">$text</textarea>
+ <input type="submit">
+ </form>
+ EOF;<br/>
+ <br/>
+ function show($str){<br/>
+        print "Output:\n<pre>";<br/>
+        $i=0;<br/>
+        while($i<strlen($str)){<br/>
+		$char=$str[$i].$str[$i+1];<br/>
+		print chr(hexdec($char));<br/>
+		$i=$i+2;<br/>
+	}<br/>
+        print "</pre>\nOutput end";<br/>
+ }<br/>
+ if ($_REQUEST["text"]!="")<br/>
+        show($text);<br/>
+ print<<<EOF<br/>
+ </body>
+ </html>
+ <br/>
+ EOF;<br/>
+
+{% endfilter %}
+{% endblock %}

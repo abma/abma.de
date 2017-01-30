@@ -1,0 +1,27 @@
+
+title: Lirc
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Howto Install lircd</h2>
+(gentoo)<br/>
+
+<ul class="mediawiki">
+<li> emerge config-kernel</li>
+<li> config-kernel --allow-writable=yes</li>
+<li> kernel must have module unloading support</li>
+<li> emerge lirc</li>
+<li> rebuild kernel</li>
+<li> and finally install kernel/reboot</li>
+<br/>
+</ul>
+<br/>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,17 @@
+
+title: Kreativer Trojaner
+author: abma
+date: 29-10-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Ein Trojaner lässt den Anwender Captchas, eigentlich zum Schutz vor automatisiertem erstellen von z.B. Emailkonten, lösen und nutzt diese Informationen um Yahoo-Konten zu erstellen die zum Spamversenden verwendet werden.
+
+Da war jemand sehr <a href="http://www.heise.de/newsticker/meldung/Trojaner-laesst-Anwender-Captchas-lesen-190126.html">kreativ</a>...
+
+{% endfilter %}
+{% endblock %}

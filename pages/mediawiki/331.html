@@ -1,0 +1,28 @@
+
+title: Debian
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Debian aufr&#228;umen</h2>
+<br/>
+ apt-get install debfoster deborphan<br/>
+
+Mit deborphan kann man wunderbar "&#252;berfl&#252;ssige" libs raussuchen und dann mit<br/>
+ apt-get remove --purge libname <br/>
+l&#246;schen. (das --purge ist daf&#252;r dass die Konfigurationsdateien auch mit gel&#246;scht werden. Soll heissen die libs die deborphan findet erf&#252;llen keine Anh&#228;ngikeiten f&#252;r Programme. <br/>
+
+<h2>Paket aus Quellecode erstellen</h2>
+<br/>
+normal compilieren, aber anstatt make install das tool checkinstall verwenden.<br/>
+einfach<br/>
+ checkinstall<br/>
+eingeben, und es wird automatisch ein paket erstellt.<br/>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,41 @@
+
+title: Ebuild
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Howto make a Ebuild</h2>
+if you get this error:<br/>
+ !!! /usr/local/portage/fastchat does not seem to have a valid PORTDIR structure.<br/>
+then your filename isn't correct!<br/>
+
+use a sample<br/>
+then<br/>
+
+ ebuild fastchat-0.16.9999.ebuild digest<br/>
+
+See also:<br/>
+http://www.gentoo.org/proj/en/devrel/handbook/handbook.xml?part=2&chap=1#doc_chap2<br/>
+
+<h2>Ebuilds manuell installieren</h2>
+<br/>
+ ebuild <package.ebuild> fetch unpack compile [test] [preinst] install [postinst] qmerge<br/>
+es kann auch ein einzelner befehl ausgef&#252;hrt werden z.B.<br/>
+ ebuild fastchat-0.16.9999.ebuild install<br/>
+
+um ein gerade ge&#228;ndertes Ebuild zu installieren muss man<br/>
+ ebuild fastchat-0.16.9999.ebuild digest fetch compile install qmerge<br/>
+eingeben.<br/>
+
+siehe auch<br/>
+ man ebuild<br/>
+bzw.<br/>
+ http://www.gentoo.org/proj/en/devrel/handbook/handbook.xml?part=2&chap=1
+
+{% endfilter %}
+{% endblock %}

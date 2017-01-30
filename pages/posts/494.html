@@ -1,0 +1,18 @@
+
+title: change doc and xls file association to libreoffice on windows
+author: abma
+date: 05-02-2014
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+open cmd.exe and type:
+
+     assoc .doc=LibreOffice.Doc
+     assoc .xls=LibreOffice.Xls
+
+{% endfilter %}
+{% endblock %}

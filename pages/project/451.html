@@ -1,0 +1,58 @@
+
+title: AGAI
+author: abma
+date: 27-12-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+##About
+AGAI is a skirmish ai for the Game Engine <a href="http://springrts.com">Spring RTS</a>. AGAI is written in Java.
+
+
+##Status
+AGAI is in an early developement-phase, nearly feature-complete to play BA, but currently some bugs prevent it to be a real opponet.
+(The economy-manager is currently waste... )
+
+
+##Install
+1. Download <a href="/builds/AGAI-current.zip">AGAI</a>
+2. Remove any old AI/Skirmish/AGAI directory
+3. unzip into the Spring folder, on linux extract with
+   
+        unzip AGAI.zip -d ~/.spring/
+
+     so you should have the following directory structure:
+
+        AI/Skirmish/AGAI/0.1/SkirmishAI.jar
+
+        ... other files ...
+
+4. Run springlobby, create a single-player game, and do 
+
+
+
+##Download
+<a href="http://abma.de/builds/AGAI-current.zip">newest build of agai</a>
+
+Currently there is no release of AGAI.
+##Source
+
+To get the Sourcecode:
+    git clone git://abma.de/agai
+The <a href="http://abma.de/buildbot/">Buildbot</a> creates <a href="http://abma.de/builds/">fresh builds</a>
+
+
+##Documentation
+Please look at the <a href="http://abma.de/projects/agai/doc">Javadocs of AGAI</a>.
+
+If you want to generate it yourself just run
+    cd AI/Interfaces/Java/bin
+    ant doc
+Output will be in "game/AI/Interfaces/Java/0.1/doc/jdoc/".
+
+{% endfilter %}
+{% endblock %}

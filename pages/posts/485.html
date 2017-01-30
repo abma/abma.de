@@ -1,0 +1,23 @@
+
+title: Windows 7 Service pack 1 auf Medion PC installieren
+author: abma
+date: 09-01-2012
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+wenn man auf einem Medion PC das Service-Pack 1 installieren will, kann es vorkommen, dass man die Fehlermeldung
+
+   ERROR_PATH_NOT_FOUND (0x8007003) 
+
+bekommt und Windows dann die installation wieder rückgängig macht.
+
+Medion hat wohl bei der Installation wohl ein paar Dateien vergessen, bieten aber dafür einen Hotfix an. Nach dem entpacken von SP1fix.exe und starten von SP1-Fix.cmd läuft die Installation des Service Pack 1 problemlos.
+
+Das Hotfix gibt es auf der Medion-Webseite: http://www.medion.com/de/service/download/software.php
+
+{% endfilter %}
+{% endblock %}

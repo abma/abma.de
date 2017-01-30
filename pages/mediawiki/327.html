@@ -1,0 +1,19 @@
+
+title: Cron
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Als normaler user cronjobs erstellen/&#228;ndern</h2>
+Entweder<br/>
+ echo username>>/etc/cron.allow<br/>
+oder /usr/bin/crontab braucht das setuid bit<br/>
+ chmod +s /usr/bin/crontab<br/>
+
+{% endfilter %}
+{% endblock %}

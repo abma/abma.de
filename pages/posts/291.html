@@ -1,0 +1,15 @@
+
+title: Probleme mit Umlauten und cwrsync?
+author: abma
+date: 23-01-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Sollte es bei einem rsync von einem windows Host Probleme mit dem Zeichensatz geben, hilft die <a href="http://www.oki-osk.jp/close/osk/index.html">UTF-8 cygwin1.dll</a>.
+
+{% endfilter %}
+{% endblock %}

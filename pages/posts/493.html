@@ -1,0 +1,21 @@
+
+title: shrink places.sqlite from firefox
+author: abma
+date: 16-12-2013
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+sometimes places.sqlite can become quiet big and slow down firefox. to clean up its possible to delete old history data with some sql-commands:
+
+    $ sqlite3 places.sqlite
+    delete from moz_historyvisits where visit_date < strftime('%s', 'now', '-1 month') * 1000 * 1000;
+    vacuum;
+
+this will delete all recent visits older than 1 month.
+
+{% endfilter %}
+{% endblock %}

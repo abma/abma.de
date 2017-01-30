@@ -1,0 +1,15 @@
+
+title: ReactOS Quellcode wird aufgeräumt
+author: abma
+date: 31-01-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Im moment wird ein Audit über den kompletten Quellcode von ReactOS gemacht.  <a href="http://www.reactos.org/wiki/Audit">Fortschritte</a> werden im ReactOS bekanntgegeben. Der Svn-quellcode wurde nach svn://svn.reactos.org/audited/trunk verschoben, im Moment ist dieser aber noch nicht zu gebrauchen, auch wenn etwas compiliert wird.  Es wird wohl einige Wochen dauern, bis ReactOS compiliert werden kann und es wird wohl einiges an funktionalität fehlen, da aller Quellcode entfernt wird, von dem die Quelle unklar ist, bzw. keine Dokumentation dafür gefunden werden kann.</p>
+
+{% endfilter %}
+{% endblock %}

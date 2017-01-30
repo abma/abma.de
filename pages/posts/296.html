@@ -1,0 +1,15 @@
+
+title: Festplatte mit ntfsclone per script clonen
+author: abma
+date: 17-06-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Um eine Festplatte mit einer NTFS-Partition komplett zu clonen kann man folgende Befehle verwenden:  (Image erstellen:) <code> </code></p><blockquote>dd if=/dev/sda of=bootsec.img bs=512 count=1<br /><code>ntfsclone -s -o - /dev/sda1 |gzip -c &gt;sda1.ntfsclone.gz</code></blockquote><p>Und zum wiederherstellen kann man folgendes Script verwenden:</p><blockquote>#!/bin/sh<br /><code>BOOTSEC=&quot;bootsec.img&quot;<br />IMAGE=&quot;sda1.ntfsclone.gz&quot;<br />DISK=&quot;/dev/sda&quot;<br />PARTITION=&quot;/dev/sda1&quot;<br />dd if=${BOOTSEC} of=${DISK}<br />sfdisk -R /dev/sda<br />udevadm settle #Avoid &quot;ERROR(28): Write failed: No space left on device&quot;<br />gzip -d -c ${IMAGE} | \               ntfsclone --restore-image --overwrite ${PARTITION} - </code></blockquote><p>&nbsp;</p>
+
+{% endfilter %}
+{% endblock %}

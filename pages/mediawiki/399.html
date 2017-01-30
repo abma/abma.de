@@ -1,0 +1,15 @@
+
+title: Samba
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>DNS Namensauflösung auch mit netbios</h2> <p><br /> winbind muss installiert sein, und damit /lib/libnss_winbind.so. hat bei mir erst ab samba3 funktioniert (unter debian)<br />  /etc/nsswitch.conf:<br />  hosts:          files dns wins<br />  <br />  /etc/host.conf<br />  order bind,hosts<br />  multi on<br />  smb.conf<br />         name resolve order = lmhosts hosts bcast<br />         dns proxy = yes<br />         winbind uid = 1000-1999<br />         winbind gid = 1000-1999<br />         wins support = no</p><h2>Samba 3 als PDC</h2> <p><br /> Als erstes müssen für jede Workstation ein Benutzerkonto auf dem samba-server eingerichtet werden-<br /> Hierzu legt man am besten eine gruppe computers an:<br />  groupadd computers<br /> Um den Account für eine Rechner anzulegen. das $ muss angehängt werden, sonst erkennt samba den namen nicht als rechner! Mit dem zweiten befehl legt man dann den maschinenaccount an.<br />  useradd -g computers -s /bin/false rechnername$<br />  smbpasswd -a -m rechnername$<br />  um einen benutzer anlegen, die folgenden befehle eingeben. Der erste legt den Unix-account an, der zweite, macht den user samba bekannt und der dritte aktiviert den user.<br />  useradd -g users -s /bin/false -d /home/USER USER<br />  smbpasswd -a USER<br />  smbpasswd -e USER<br />  jetzt muss noch smb.conf geändert werden, um den samba als adc starten zu können:<br /> smb.conf:<br />  domain master = yes<br />  prefered domain = yes<br />  domain logons = yes<br />  os level = 65<br />  security = user<br />  idmap uid = 10000-20000<br />  idmap gid = 10000-20000<br />  <br />  unix password sync = Yes<br />  add user script = useradd --home-dir /tmp -s /bin/false %u<br />  pam password change = yes<br />  dann muss noch samba neu gestartet werden.<br />  und dann zum schluss noch der domaine beitreten:<br />  net join<br />  ein wbinfo -t sollte folgendes ausgeben:</p><ol class="mediawiki"> <li>wbinfo -t</li> </ol><p>checking the trust secret via RPC calls succeeded<br />  #</p><h2>Beispiel für net groupmap</h2> <p><br />  net groupmap modify ntgroup=Administrators unixgroup=admin</p><h2>Drucker einrichten</h2> <ul class="mediawiki"> <li>http://www.cups.org/man/cupsaddsmb.html</li> <li>http://www.tei-lin-net.de/tip_samba_03.html</li> <li>http://www.tecchannel.de/server/linux/401378/linux_als_printserver/index9.html</li> <br /> </ul><p>Wohin ist make_printerdef verschwunden?<br /> -&gt; cupsaddsmb</p><h2>Links</h2> <ul class="mediawiki"> <li><a href="http://www.gentoo.de/doc/de/quick-samba-howto.xml Gentoo Samba3/CUPS/CLAM AV">Howto</a></li> </ul>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,33 @@
+
+title: Canon IR2020
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Backup des Adressbuchs eines Canon IR2020</h2>
+Folgendes Script fertigt ein Backup des Adressbuchs eines Canon IR2020 an.<br/>
+
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ for i in 192.168.1.100 ; do<br/>
+        HOST=$i<br/>
+        TMPFILE=/tmp/cookies<br/>
+        OUTFILE=/home/backup/public_html/adressen/`date +"%Y-%m-%d_%H-%M-%S"`_${HOST}_adressbuch.ldif<br/>
+
+        wget --quiet --keep-session-cookies --save-cookies $TMPFILE \<br/>
+           --post-data='a0x50d2=0&a0x50c9=0&num=0&lang=4&login_mode=admin&pwd=&user_name=' \<br/>
+           --output-document=/dev/null http://$HOST/login.cgi<br/>
+        wget --quiet http://$HOST/adrs_book.abk \<br/>
+           --referer='http://$HOST/adrs03.html?dn=1'\<br/>
+           --load-cookies $TMPFILE --output-document=$OUTFILE<br/>
+ done<br/>
+ rm -f $TMPFILE
+
+{% endfilter %}
+{% endblock %}

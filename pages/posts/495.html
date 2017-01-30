@@ -1,0 +1,40 @@
+
+title: c++ filehandling with unicode paths on windows
+author: abma
+date: 28-03-2014
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+windows ansi functions lack of proper utf-8 support. this is why opening/writing files in a folder with unicode chars fails. with this wrapper this isn't an issue any more:
+
+<blockquote>
+std::wstring s2ws(const std::string& s)
+{
+        const size_t slength = s.length() + 1;
+        const int len = MultiByteToWideChar(CP_ACP , 0, s.c_str(), slength, 0, 0);
+        wchar_t* buf = new wchar_t[len];
+        MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, buf, len);
+        std::wstring r(buf, len);
+        delete[] buf;
+        return r;
+}
+
+FILE* lslopen(const std::string filename, const std::string mode)
+{
+#ifdef WIN32
+        return _wfopen(Util::s2ws(filename).c_str(), Util::s2ws(mode).c_str());
+#else
+        return fopen(filename.c_str(), mode.c_str());
+#endif
+
+}
+</blockquote>
+
+instead of opening a file with fopen,  call lslopen and then use FILE as usual.
+
+{% endfilter %}
+{% endblock %}

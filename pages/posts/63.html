@@ -1,0 +1,17 @@
+
+title: WinFS? GLScupe!
+author: abma
+date: 09-07-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Microsoft muss sich ganz schön ins Zeug legen, will es noch mit Linux schritt halten. <a href="http://www.glscube.org/developers.html">GLScupe</a> ist ein Semantisches Speichersystem, dass ähnliche Funktionen wie WinFS bieten soll, allerdings ist GLScupe schon erhältlich.
+
+GLScupe setzt auf das <a href="http://fuse.sourceforge.net/">FUSE</a> auf und benötigt einen PostgreSQL server. Das Dateisystem basiert auf FUSE, wenn dieses im Kernel aktiviert ist, dann werden keine Treiber mehr benötigt.
+
+{% endfilter %}
+{% endblock %}

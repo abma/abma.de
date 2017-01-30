@@ -1,0 +1,15 @@
+
+title: Canon IR2020 Multifunktionsdrucker kann nicht alles?
+author: abma
+date: 10-12-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Der Canon IR2020 Multifunktionsdrucker kann Dokumente einscannen und Emails mit PDF-Anhang versenden. Allerdings lässt sich fast nichts einstellen, z.B. Empfangsbestätigungen sind nicht möglich, oder ein BCC an eine andere Emailadresse auch nicht.  Wenn jedoch Exim als Emailserver verwendet wird, lässt sich diese Funktion leicht über einen <a href="/wiki/exim">Exim Systemfilter</a> einrichten.  Soll noch ein Backup des Adressbuches erstellt werden, kann dies mit einem <a href="http://abma.de/wiki/Canon_IR2020">Bash-Script</a> gemacht werden.</p>
+
+{% endfilter %}
+{% endblock %}

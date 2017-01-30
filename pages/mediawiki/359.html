@@ -1,0 +1,71 @@
+
+title: Linux/General
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Gateway etc. einrichten</h2>
+del default route to lan<br/>
+
+ route del -net 192.168.1.0 netmask 255.255.255.0<br/>
+
+add default route to lan<br/>
+
+ route add -net 192.168.1.0 netmask 255.255.255.0 dev eth0<br/>
+
+add gateway<br/>
+
+ route add default gw 192.168.1.100<br/>
+
+<h2>verbindungen &#252;berwachen</h2>
+ watch netstat -tan<br/>
+oder um alle serverdienste anzuzeigen:<br/>
+  netstat -lptun<br/>
+
+<br/>
+<h2>Shortcuts / Tastaturk&#252;rzel</h2>
+<ul class="mediawiki">
+<li>Shift+BildAuf/BildAb Aktuelle Konsole scrollen</li>
+<li>Another facility for getting system status information is built into the virtual console driver. This depends on your keyboard mapping, but the default for the US keyboard is to use the Scroll-Lock key. Pressing <Alt><Scroll Lock> shows the current value of the CPU registers. The <Shift><Scroll Lock> combination shows memory information, similar to the "free" command, but more detailed. Finally, <Ctrl><Scroll Lock> will give information on individual processes, much like the "ps" command.</li>
+<li>STRG+S stop control ?</li>
+<li>STRG+Q continue control</li>
+<br/>
+</ul>
+<h2>passwd incl. ldap / mysql daten anzeigen</h2>
+<br/>
+ getent passwd<br/>
+
+<h2>Prozesse auflisten</h2>
+Listet alle Prozessids von squid auf.<br/>
+ ps -C squid -o pid=<br/>
+Pid des aktuellen prozesses (f&#239;&#191;&#189;r shell scripte z.b.)<br/>
+ echo $$<br/>
+
+<h2>Inhalt von zwei Verzeichnissen vergleichen</h2>
+ diff -s -r / /<br/>
+
+<h2>Convert Text file from Unix/Dos to Dos/Unix format</h2>
+From the UNIX shell: tr -d "\015" < inputfile > outputfile<br/>
+
+E.g.: tr -d "\015" < dosformatted.txt > unixformatted.txt<br/>
+
+<h2>Festplatte nach kaputten bl&#246;cken durchsuchen</h2>
+Bei solchen fehlermeldungen im Kernel log:<br/>
+ hdb: status error: status=0x7f { DriveReady DeviceFault SeekComplete DataRequest CorrectedError Index Error }<br/>
+ hdb: status error: error=0x7f { DriveStatusError UncorrectableError SectorIdNotFound TrackZeroNotFound AddrMarkNotFound }, LBAsect=260013951, sector=0<br/>
+ ide: failed opcode was: 0xef<br/>
+ hdb: drive not ready for command<br/>
+ist es ratsam mit "badblocks" (ist bei den e2fsprogs dabei) nach fehlerhaften bl&#246;cken zu suchen und am besten vorher ein backup machen!<br/>
+
+<h2>dateinamen alle nach kleinbuchstaben konvertieren</h2>
+ convmv --lower --notest *<br/>
+
+<a href="/">Kategorie:Linux</a>
+
+{% endfilter %}
+{% endblock %}

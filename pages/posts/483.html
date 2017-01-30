@@ -1,0 +1,23 @@
+
+title: ClearType auf elux-ThinClient bzw. mit rdesktop verwenden
+author: abma
+date: 12-12-2011
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Um ClearType über eine RemoteDesktop verbindung zu aktivieren muss man erstmal unter Windows Server 2003 einen Hotfix installieren:
+http://support.microsoft.com/kb/946633 neuere Versionen sollten das von Haus aus können.
+
+Um die Verbindung zum Terminalserver aufzubauen legt man eine Anwendung an:
+    rdesktop -f -N -x 0x80 -d <domain> <server>
+
+-f aktiviert denn Vollbildmodus
+-x 0x80 aktiviert ClearType
+-N ist ein Workaround, damit der Nummernblock funktioniert, das Minuszeichen geht sonst nicht.
+
+{% endfilter %}
+{% endblock %}

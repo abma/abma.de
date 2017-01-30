@@ -1,0 +1,69 @@
+
+title: Initng
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>net.i</h2>
+/etc/initng/net/net.i<br/>
+
+ service net/lo {<br/>
+         need = system/mountfs system/modules system/hostname;<br/>
+         script start = {<br/>
+                 echo "Starting net/$NAME now"<br/>
+                 /sbin/ifconfig lo 127.0.0.1 netmask 255.0.0.0<br/>
+         };<br/>
+         script stop = {<br/>
+                 echo "Stopping net/lo now"<br/>
+                 /sbin/ifconfig lo down<br/>
+         };<br/>
+ }<br/>
+ <br/>
+ service net/eth0 {<br/>
+         depends = system/initial system/checkroot system/modules;<br/>
+         script start = {<br/>
+                 echo "Starting net/eth0 now"<br/>
+                 /sbin/dhcpcd eth1<br/>
+         };<br/>
+         script stop = {<br/>
+                 echo "Stopping net/eth0 now"<br/>
+                 /sbin/dhcpcd -k eth1<br/>
+         };<br/>
+ }<br/>
+ <br/>
+ service net/eth1 {<br/>
+         depends = system/initial system/checkroot system/modules;<br/>
+         script start = {<br/>
+                 echo "Starting net/eth1 now"<br/>
+                 /sbin/ifconfig eth1 192.168.1.2 netmask 255.255.255.0<br/>
+         };<br/>
+         script stop = {<br/>
+                 echo "Stopping net/eth1 now"<br/>
+                 /sbin/ifconfig eth1 down<br/>
+         };<br/>
+ }<br/>
+
+<h2>gpm.i</h2>
+/etc/initng/net/gpm.i<br/>
+
+ daemon daemon/gpm {<br/>
+     need = system/initial system/mountfs;<br/>
+     exec daemon = /usr/sbin/gpm;<br/>
+     exec_args daemon = -m /dev/input/mice -t exps2 -A 60 -p -a 8 -d 7 -Rraw;<br/>
+     pid_file = /var/run/gpm.pid;<br/>
+ }<br/>
+
+<h2>Links</h2>
+<br/>
+<ul class="mediawiki">
+<li><a href="http://gentoo-wiki.com/HOWTO_Initng HowTO">configure</a></li>
+<li><a href="http://initng.thinktux.net/index.php/Documentation Script">Documentation</a></li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

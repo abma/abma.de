@@ -1,0 +1,55 @@
+
+title: (Xen + Windows 2003 + lvm) Wie ein ntfsclone auf rawimage verwenden?
+author: abma
+date: 25-07-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+/dev/vg/windows2003 ist ein raw-image für eine windows 2003 domU. D.h. das Device enthält auch eine Partitionstabelle, was das direkte mounten / ntfsclone unmöglich macht. Mit losetup lässt sich dieses problem jedoch elegant umschiffen:
+
+als erstes sollte man einen snapshot erzeugen:
+<blockquote>
+lvcreate --permission r --snapshot /dev/vg/windows2003 --size 2G --name snap
+</blockquote>
+dann muss man sich die partitionstabelle anschauen:
+<blockquote>
+fdisk -l -u /dev/vg/snap
+Disk fdisk /dev/vg/snap: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = cylinders of 16065 * 512 = 8225280 bytes
+               Device Boot      Start         End       Blocks   Id  System
+/dev/vg/snap1   *           63   125805014    62902476    7  HPFS/NTFS
+</blockquote>
+Dann muss man das offset ausrechnen: Startsektor  * Sektorgrösse, in diesem fall:
+63*512 = 32256
+dann kann das loop-device konfiguriert werden:
+<blockquote>
+losetup -o 32256 /dev/loop0 /dev/vg/snap
+</blockquote>
+
+und schon kann ntfsclone verwendet werden:
+
+<blockquote>
+ntfsclone  /dev/loop0 -s -o /tmp/snap.ntfsclone
+</blockquote>
+
+Wiederherstellen geht dann so:
+
+<blockquote>
+ntfsclone snap.ntfsclone -r -o rawimage.test
+</blockquote>
+
+Achtung: ein ntfsresize auf das loopdevice zerstört die partition!
+
+Das tool kpartx aus dem paket multipath-tools kann auch anstatt des losetup verwendet werden:
+
+<blockquote>
+kpartx -a /dev/vg/snap
+</blockquote>
+
+{% endfilter %}
+{% endblock %}

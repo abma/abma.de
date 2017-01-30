@@ -1,0 +1,15 @@
+
+title: Windows Eventlog unter Linux auslesen
+author: abma
+date: 31-01-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Wenn man unter Linux den Eventlog von Windows auslesen will, bietet sich das Perlscript &quot;<a href="http://www.d-fence.be/">FCCU evtreader.pl</a>&quot; an.  Mit z.B.</p> <blockquote> ./fccu.evtreader.pl /media/windows/WINDOWS/system32/config/AppEvent.Evt </blockquote> <p>zeigt es den Eventlog für Anwendungen an.</p>
+
+{% endfilter %}
+{% endblock %}

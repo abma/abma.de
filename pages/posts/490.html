@@ -1,0 +1,20 @@
+
+title: show not connected devices in devicemanager
+author: abma
+date: 15-01-2013
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+to remove not connected devices from windows, run cmd.exe, type:
+
+   set devmgr_show_nonpresent_devices=1
+   start devmgmt.msc
+
+now you can delete non-used drivers /devices.
+
+{% endfilter %}
+{% endblock %}

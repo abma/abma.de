@@ -1,0 +1,19 @@
+
+title: Markdown
+author: abma
+date: 15-06-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Ich blogge ja schon eine weile und bin eben auf <a href="/tools/markdown">Markdown</a> gestoßen.
+
+Markdown erzeugt aus einer sehr einfachen Text-Syntax HTML-Seiten mit einer ganz ansehnlichen Formatierung.
+
+Für Drupal habe ich auch ein <a href="http://drupal.org/project/markdown">markdown Modul</a> gefunden, jetzt blogge ich ohne die ganzen umständlichen Tools, mal sehen wie sich das bewährt.
+
+{% endfilter %}
+{% endblock %}

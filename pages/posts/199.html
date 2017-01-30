@@ -1,0 +1,15 @@
+
+title: Partitionstabelle neu einlesen
+author: abma
+date: 26-12-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Um eine geänderte Partitionstabelle (ohne neustart) einlesen zu lassen kann man hdparm verwenden:</p><blockquote>hdparm -z /dev/GERAET</blockquote><p>Das funktioniert natürlich nur, wenn das Gerät nicht verwendet wird.</p><p>&nbsp;</p>
+
+{% endfilter %}
+{% endblock %}

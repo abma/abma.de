@@ -1,0 +1,45 @@
+
+title: timetostr
+author: abma
+date: 24-11-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<?php
+$timestamp=intval(htmlentities($_REQUEST["timestamp"]));
+if ($timestamp=="")
+$timestamp=time();
+?>
+<form method="post" action="<?php echo $self ?>">
+<input name="timestamp" value="<?php echo $timestamp ?>"/>
+<input type="submit" value="aktualisieren"/>
+</form>
+<?php
+echo "Input value: $timestamp\n<br/>";
+echo "Date: ".date("r",intval($timestamp))."<br/>\n";
+
+$sys_ticks=intval($timestamp);
+        $min   = $sys_ticks / 60;
+        $hours = $min / 60;
+        $days  = floor($hours / 24);
+        $hours = floor($hours - ($days * 24));
+        $min   = floor($min - ($days * 60 * 24) - ($hours * 60));
+
+        if ($days != 0) {
+            $result = $days."d ";
+        }
+
+        if ($hours != 0) {
+            $result .= $hours." Stunden und ";
+        }
+            
+        $result .= $min ." Minuten."; 
+echo $result;
+?>
+
+{% endfilter %}
+{% endblock %}

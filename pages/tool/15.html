@@ -1,0 +1,27 @@
+
+title: strtotime
+author: abma
+date: 24-11-2007
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<?php
+$date=htmlentities($_REQUEST["date"]);
+if ($date=="")
+$date=strftime("%x %X",time());
+?>
+<form method="post" action="<?php echo $self ?>">
+<input name="date" value="<?php echo $date ?>"/>
+<input type="submit" value="aktualisieren"/>
+</form>
+<?php
+echo "Input value: $date\n<br/>";
+echo "Unix time stamp: ".strtotime($date);
+?>
+
+{% endfilter %}
+{% endblock %}

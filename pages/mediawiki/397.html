@@ -1,0 +1,30 @@
+
+title: Rsync
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Backup auf einen Remotehost &#252;ber ssh</h2>
+<br/>
+script:<br/>
+<ol class="mediawiki">
+<li>!/bin/sh</li>
+</ol>
+ EXCLUDEFILE=rsyncexclude.ini<br/>
+ BACKUPTO=user@server.com:/rsync/backup/<br/>
+ BACKUPDIR=user@server.com:/rsync/old/<br/>
+ <br/>
+<ol class="mediawiki">
+<li>Limit data rate to 7 kbps</li>
+</ol>
+ KBPS=7<br/>
+ <br/>
+ rsync --bwlimit=$KBPS --backup-dir=$BACKUPDIR --exclude-from=$EXCLUDEFILE --backup --archive -v --compress -e ssh / $BACKUPTO
+
+{% endfilter %}
+{% endblock %}

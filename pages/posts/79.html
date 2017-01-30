@@ -1,0 +1,15 @@
+
+title: Useragent im Firefox verstecken
+author: abma
+date: 03-11-2006
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>Um Google und anderen das Datensammeln  zu erschweren kann man den <a href="/wiki//Windows/Firefox">Useragent im Firefox deaktivieren</a>. Als Adresse about:config eingeben. Dann Rechtsklick -&gt; Neu -&gt; String &quot;general.useragent.override&quot; und als Wert nichts angeben.  Zusätzlich kann man das <a href="/wiki//Windows/Firefox">Senden des referers unterdrücken</a>.  Zum testen kann man sich die <a href="https://abma.de/tools/header">Header anzeigen</a> lassen.  Edit: Toll, ich&nbsp; hab einen <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=359417">Bug gefunden</a>.</p>
+
+{% endfilter %}
+{% endblock %}

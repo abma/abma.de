@@ -1,0 +1,15 @@
+
+title: Wine
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Wine mit nvidia treiber compilieren</h2><p>Beim Compilieren gibts nen fehler, blabla undefiniert.<br /> Es fehlen einige Konstanten in /usr/include/GL/glext.h<br />  Unter http://adaopengl.sourceforge.net/docs/opengl-ext.html sind diese Konstanten und müssen in /usr/include/GL/glext.h eingefügt werden. Bei NVIDIA 1.0-6629 ist das</p><ol class="mediawiki"> <li>define GL_MAX_VERTEX_UNITS_ARB           0x86A4</li> <li>define GL_WEIGHT_SUM_UNITY_ARB           0x86A6</li> <li>define GL_WEIGHT_ARRAY_ARB               0x86AD</li> <li>define GL_VERTEX_BLEND_ARB               0x86A7</li> <li>define GL_MODELVIEW3_ARB                 0x8723</li> <li>define GL_MODELVIEW2_ARB                 0x8722</li> <li>define GL_MODELVIEW1_ARB                 0x850A</li> <li>define GL_MODELVIEW0_ARB                 0x1700</li> </ol>  <p><br /> alternativ kann man unter gentoo mit<br />   opengl-update xorg-x11<br />  zu den <a href="/">xorg</a> libs/header dateien umschalten.</p><h2>Winamp ohne Windomanager umrandung</h2><p>.wine/config:<br />  [AppDefaults\\winamp.exe\\x11drv]<br />  &quot;Managed&quot; = &quot;N&quot;</p><h2>Dcom98</h2><p>Wird für fast alles wichtige gebraucht, gibts bei <a href="http://www.microsoft.com/downloads/details.aspx?familyid=08b1ac1b-7a11-43e8-b59d-0867f9bdda66&amp;displaylang=en">Microsoft</a> bzw. <a href="http://download.microsoft.com/download/d/1/3/d13cd456-f0cf-4fb2-a17f-20afc79f8a51/DCOM98.EXE">deeplink</a> Mit<br />  wine --winver winme DCOM98.exe<br />  oder<br />  WINEDLLOVERRIDES=ole32,oleaut32,rpcrt4=n wine DCOM98.EXE <br />  installieren.</p><h2>Script zum installieren von Internet Explorer und Media Player</h2> <p>&nbsp;</p><ul class="mediawiki"> <li>http://sidenet.ddo.jp/winetips/config.html bzw.</li> <li>http://www.tatanka.com.br/ies4linux/page/Main_Page</li> <br /> </ul> <h2>winedbg deaktivieren</h2> <p><br />   HKEY_LOCAL_MACHINE/Software/Microsof/Windows NT/CurrentVersion/AeDebug<br />  <br />  Auto = 3<br />  oder<br />   Debugger = winedbg --auto %ld %ld</p><h2>Mozilla ActiveX Plug-in</h2> <p><br /> http://www.iol.ie/~locka/mozilla/plugin.htm#download<br />  <br />  <a href="/home/wiki/Kategorie: Linux">Kategorie: Linux</a></p>
+
+{% endfilter %}
+{% endblock %}

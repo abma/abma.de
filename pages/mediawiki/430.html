@@ -1,0 +1,89 @@
+
+title: Windows/Registry
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Default email Application without admin privileges</h2>
+<br/>
+(unter HKEY_CURRENT_USER\Software\Classes k&#239;&#191;&#189;nnen HKEY_LOCAL_MACHINE\* eintr&#239;&#191;&#189;ge &#239;&#191;&#189;berschrieben werden)<br/>
+ Windows Registry Editor Version 5.00<br/>
+ <br/>
+ [HKEY_CURRENT_USER\SOFTWARE\CLASSES\mailto]<br/>
+ "URL Protocol"=""<br/>
+ "EditFlags"=hex:02,00,00,00<br/>
+ @="URL:MailTo Protocol"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\SOFTWARE\CLASSES\mailto\DefaultIcon]<br/>
+ @="\"C:\\PROGRAMS\\MOZILLA THUNDERBIRD\\THUNDERBIRD.EXE\",7"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\SOFTWARE\CLASSES\mailto\shell]<br/>
+ <br/>
+ [HKEY_CURRENT_USER\SOFTWARE\CLASSES\mailto\shell\open]<br/>
+ <br/>
+ [HKEY_CURRENT_USER\SOFTWARE\CLASSES\mailto\shell\open\command]<br/>
+ @="\"**C:\\PROGRAMS\\MOZILLA THUNDERBIRD\\THUNDERBIRD.EXE**\" \"%1\""*<br/>
+
+<h2>Default Browser without admin privileges</h2>
+<br/>
+ Windows Registry Editor Version 5.00<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP]<br/>
+ @="URL:HyperText Transfer Protocol"<br/>
+ "EditFlags"=dword:00000002<br/>
+ "URL Protocol"=""<br/>
+ "Source Filter"="{E436EBB6-524F-11CE-9F53-0020AF0BA770}"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\AnimExtensions]<br/>
+ "."="dxmasf.dll,150"<br/>
+ ".asf"="dxmasf.dll,150"<br/>
+ ".asp"="dxmasf.dll,150"<br/>
+ ".asx"="dxmasf.dll,150"<br/>
+ ".nsc"="dxmasf.dll,150"<br/>
+ ".wax"="dxmasf.dll,150"<br/>
+ ".wm"="dxmasf.dll,150"<br/>
+ ".wma"="dxmasf.dll,150"<br/>
+ ".wmv"="dxmasf.dll,150"<br/>
+ ".wmx"="dxmasf.dll,150"<br/>
+ ".wvx"="dxmasf.dll,150"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\DefaultIcon]<br/>
+ @="C:\\PROGRAMS\\MOZILLA FIREFOX\\FIREFOX.EXE,0"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\Extensions]<br/>
+ ".ASF"="{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"<br/>
+ ".ASX"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".ASP"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".WAX"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".WM"="{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"<br/>
+ ".WMA"="{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"<br/>
+ ".NSC"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".BECK"="{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"<br/>
+ ".WVX"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".WMV"="{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"<br/>
+ ".WMX"="{4B428940-263C-11d1-A520-000000000000}"<br/>
+ ".IVF"="{C69E8F40-D5C8-11D0-A520-145405C10000}"<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\shell]<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\shell\open]<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\shell\open\command]<br/>
+ @="C:\\PROGRAMS\\MOZILLA FIREFOX\\FIREFOX.EXE -url \"%1\""<br/>
+ <br/>
+ [HKEY_CURRENT_USER\Software\Classes\HTTP\shell\open\ddeexec]<br/>
+ @=""<br/>
+
+<br/>
+<h2>.reg datei automatisch importieren</h2>
+ regedit /s dateiname.reg<br/>
+
+<a href="/home/wiki/Kategorie: Windows">Kategorie: Windows</a>
+
+{% endfilter %}
+{% endblock %}

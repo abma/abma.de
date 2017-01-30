@@ -1,0 +1,15 @@
+
+title: Sinnlosposting (naja, ist eher ein Uploadtest)
+author: abma
+date: 22-06-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<p>AAAHHHHH!</p><p><img align="bottom" width="466" height="177" src="/sites/files/images/wetter.png" alt="" /></p>
+
+{% endfilter %}
+{% endblock %}

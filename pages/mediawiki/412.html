@@ -1,0 +1,30 @@
+
+title: Unattended
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Programme ohne Benutzereingagen installieren (unattended)</h2>
+<br/>
+Thunderbird 1.5.0.7: (siehe auch <a href="/">Unattended/Thunderbird</a>)<br/>
+ setup -ms<br/>
+ setup -ma ;mit gui<br/>
+7-zip<br/>
+ Setup.exe /S<br/>
+oder<br/>
+ msiexec Setup.msi /qn<br/>
+
+<h2>Links</h2>
+<br/>
+<ul class="mediawiki">
+<li><a href="http://www.german-nlite.de/guide=ug-schaltertabelle Parameter f&#252;r viele">programme</a></li>
+<li><a href="http://www.heisig-it.de/unattended3.htm WindowsXP unattended iso">erstellen</a></li>
+</ul>
+
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,20 @@
+
+title: Adventskalender
+author: abma
+date: 03-12-2005
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+Zwei nette Adventskalender:
+<ul>
+<li><a href="http://www.pg.bc.bw.schule.de/neu/adventskalender/pg-adventskalender2005.html">Pestalozzi-Gymnasium Biberach</a></li>
+<li><a href="http://www.tu-chemnitz.de/advent/2005/">TU-Chemnitz</a></li>
+
+</ul>
+
+{% endfilter %}
+{% endblock %}

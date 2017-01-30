@@ -1,0 +1,53 @@
+
+title: Openstreetmaps in Webseite integrieren
+author: abma
+date: 13-08-2008
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<a href="http://www.openstreetmap.de/">Openstreetmaps</a> ist eine Opensource-alternative zu Google-maps und auch relativ leicht in die Webseite zu <a href="http://wiki.openstreetmap.org/wiki/OpenLayers_Simple_Example">integrieren</a>.
+
+<?php
+print <<<EOF
+<!--schnipp-->
+<div style="width:450px; height:480px" id="map"></div>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<script type="text/javascript">
+var lat=50.8213;
+var lon=12.92307;
+var zoom=15;
+var map;
+function init() {
+ map = new OpenLayers.Map ("map", {
+   controls:[
+     new OpenLayers.Control.Navigation(),
+     new OpenLayers.Control.PanZoomBar(),
+     new OpenLayers.Control.Attribution()],
+     maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+      maxResolution: 156543.0399,
+      numZoomLevels: 19,
+      units: 'm',
+      projection: new OpenLayers.Projection("EPSG:900913"),
+      displayProjection: new OpenLayers.Projection("EPSG:4326")
+ });
+ layerTilesAtHome = new OpenLayers.Layer.OSM.Osmarender("Osmarender");
+ map.addLayer(layerTilesAtHome);
+ var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+ map.setCenter (lonLat, zoom);
+}
+init();
+</script>
+<!--schnapp-->
+EOF;
+?>
+
+Das interessante an dem Projekt ist, dass es ähnlich wie Wikipedia funktioniert, jeder kann dazu Beitragen und z.B. <a href="http://openstreetbugs.appspot.com/">Fehler melden</a>.
+
+{% endfilter %}
+{% endblock %}

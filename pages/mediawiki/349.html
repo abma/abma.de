@@ -1,0 +1,32 @@
+
+title: Imwheel
+author: abma
+date: 21-11-2009
+
+{% extends "post.html" %}
+{% block body %}
+
+{% load markup %}
+{% filter markdown %}
+
+<h2>Konfiguration um seitliche Tasten f&#252;r Vorw&#228;rts/R&#252;ckw&#228;rts zu verwenden</h2>
+<br/>
+ ".*"<br/>
+ None, Thumb1, Alt_L|Left<br/>
+ None, Thumb2, Alt_L|Right<br/>
+
+Die erste Zeile gibt an, f&#252;r welches Programm diese Kombination gilt. ".*" ist f&#252;r alle.<br/>
+Das None in der zweiten Zeile gibt an, dass kein Modifier-Taste gedr&#252;ckt sein soll (ALT,SHIFT, STRG). <br/>
+
+Thumb1 gibt an, welche Taste von der Maus abgefangen soll und ALT_L|Left sind dann die tats&#228;chlichen an die X-Anwendung gesendeten Tasten.<br/>
+
+Weiter Tasten siehe auch unter dem Abschnitt KEYSYMS in der Manpage von imwheel.<br/>
+
+<h2>Links</h2>
+<br/>
+<ul class="mediawiki">
+<li><a href="http://de.gentoo-wiki.com/Maus-Navigationstasten imwheel auf">Gentoo-wiki.com</a></li>
+</ul>
+
+{% endfilter %}
+{% endblock %}
