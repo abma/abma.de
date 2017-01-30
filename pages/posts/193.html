@@ -9,7 +9,27 @@ date: 02-11-2008
 {% load markup %}
 {% filter markdown %}
 
-<p>If you have removed a scsi-device, but forgot to unmount it, you'll get messages like this one:</p><blockquote> Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 0<br />Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 1<br />Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 2<br />Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 3<br />Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 5119 </blockquote><p>To remove &quot;dead&quot; scsi-devices, type</p><blockquote> echo 1&gt; /sys/block/sdX/device/delete  </blockquote><p>where sdX the dead device is. Be careful, don't remove devices you are currently using!  To rescan for (new) scsi-devices type</p><blockquote> echo &quot;- - -&quot; &gt; /sys/class/scsi_host/hostX/scan </blockquote><p>where X is the host adapter id. (Should be 0)  If the Volumesize was changed, then following command re-reads the volume size:</p><blockquote> echo 1 &gt; /sys/block/sdc/device/rescan  </blockquote><p>(tested with custom linux-2.6.20-xen-r7)  <!--break--></p><p>&nbsp;</p>
+If you have removed a scsi-device, but forgot to unmount it, you'll get messages like this one:
+
+	Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 0
+	Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 1
+	Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 2
+	Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 3
+	Nov  2 22:18:01 192.168.0.50 kernel: Buffer I/O error on device sdd, logical block 5119
+
+To remove "dead" scsi-devices, type
+
+	echo 1&gt; /sys/block/sdX/device/delete
+
+where sdX the dead device is. Be careful, don't remove devices you are currently using!  To rescan for (new) scsi-devices type
+
+	echo "- - -" &gt; /sys/class/scsi_host/hostX/scan
+
+where X is the host adapter id. (Should be 0)  If the Volumesize was changed, then following command re-reads the volume size:
+
+	echo 1 &gt; /sys/block/sdc/device/rescan
+
+(tested with custom linux-2.6.20-xen-r7)
 
 {% endfilter %}
 {% endblock %}

@@ -9,7 +9,13 @@ date: 13-09-2007
 {% load markup %}
 {% filter markdown %}
 
-<p>Um ein debian aus einem bestehenden system zu installieren (in diesem fall in /mnt/tmp) gibt es das tool debootstrap.</p><blockquote> debootstrap --arch i386 sid /mnt/ubuntu/ http://ftp.de.debian.org/debian/</blockquote><p>Dies ermöglicht es z.b. Sidux zu installieren. Dazu muss nur noch /etc/apt/sources.list ersetzt werden:</p><blockquote>wget http://sidux.com/files/misc/sources.list mv sources.list /etc/apt/sources.list</blockquote>
+Um ein debian aus einem bestehenden system zu installieren (in diesem fall in /mnt/tmp) gibt es das tool debootstrap.
+
+	debootstrap --arch i386 sid /mnt/ubuntu/ http://ftp.de.debian.org/debian/
+
+Dies ermöglicht es z.b. Sidux zu installieren. Dazu muss nur noch /etc/apt/sources.list ersetzt werden:
+
+	wget http://sidux.com/files/misc/sources.list mv sources.list /etc/apt/sources.list
 
 {% endfilter %}
 {% endblock %}

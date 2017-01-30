@@ -9,23 +9,21 @@ date: 17-04-2010
 {% load markup %}
 {% filter markdown %}
 
-<p>If you want to migrate a Physical to a Virtual Host or vice versa then you can use the attached files to enable the default IDE&nbsp;drivers on the running system.</p>
-<p>before doing so, please make a backup!&nbsp;:-)</p>
-<p>I used the Script to convert a Windows XP running in VirtualBox to be executed in KVM. Without doing so i got a 0x0000007B bluescreen.</p>
-<p>The .reg file is from Microsoft, the .cmd should be self-explaining :)</p>
-<p>kvm supports .vdi files so the VirtualBox machine can be run directly with kvm:</p>
-<blockquote>
-<p>kvm -hda windows.vdi</p>
-</blockquote>
-<p>The image then finally can be converted with</p>
-<blockquote>
-<p>qemu-img convert -O qcow2 windows.vdi windows.qcow2</p>
-</blockquote>
-<p>If that doesn't work the VBoxManage tool from Virtualbox should do the job too:</p>
-<blockquote>
-<p>VBoxManage clonehd &ndash;format RAW windows.vdi windows.img</p>
-</blockquote>
-<p>&nbsp;</p>
+If you want to migrate a Physical to a Virtual Host or vice versa then you can use the attached files to enable the default IDE drivers on the running system.
+before doing so, please make a backup! :-)
+I used the Script to convert a Windows XP running in VirtualBox to be executed in KVM. Without doing so i got a 0x0000007B bluescreen.
+The .reg file is from Microsoft, the .cmd should be self-explaining :)
+kvm supports .vdi files so the VirtualBox machine can be run directly with kvm:
+
+	kvm -hda windows.vdi
+
+The image then finally can be converted with
+
+	qemu-img convert -O qcow2 windows.vdi windows.qcow2
+
+If that doesn't work the VBoxManage tool from Virtualbox should do the job too:
+
+	VBoxManage clonehd -format RAW windows.vdi windows.img
 
 {% endfilter %}
 {% endblock %}

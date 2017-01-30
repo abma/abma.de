@@ -10,7 +10,8 @@ date: 19-06-2007
 {% filter markdown %}
 
 TV aufnehmen von v4l2, aktueller kanal, ausgabe avi mit mpeg4/mp3-ton, deinterlace und noise-reduction filter:
-<blockquote>mencoder tv:// -tv driver=v4l2:norm=pal:forceaudio:alsa:adevice=hw.0,0 -oac mp3lame -ovc lavc -lavcopts vcodec=mpeg4:vhq:autoaspect=1:vbitrate=1200 -vf pp=l5,pp=tn  -o test.avi</blockquote>
+
+	mencoder tv:// -tv driver=v4l2:norm=pal:forceaudio:alsa:adevice=hw.0,0 -oac mp3lame -ovc lavc -lavcopts vcodec=mpeg4:vhq:autoaspect=1:vbitrate=1200 -vf pp=l5,pp=tn  -o test.avi
 
 {% endfilter %}
 {% endblock %}

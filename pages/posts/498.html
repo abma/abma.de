@@ -11,8 +11,8 @@ date: 04-11-2016
 
 in pymssql stored procedures can be called. some stored procedures have not output vars but return values. I couldn't find any reference to returnvalue in the docs, i only found it by reading the source code. as pseudo-code:
 
-    cursor.callproc("function", (param1, param2))
-    print(cursor.returnvalue)
+	cursor.callproc("function", (param1, param2))
+	print(cursor.returnvalue)
 
 {% endfilter %}
 {% endblock %}

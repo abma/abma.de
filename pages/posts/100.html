@@ -10,18 +10,17 @@ date: 11-06-2007
 {% filter markdown %}
 
 /etc/cron.weekly/lvmsnapshot:
-<blockquote>
-#!/bin/sh
 
-lvremove /dev/vg/snap-old-gentoo-1 --force
-lvremove /dev/vg/snap-old-home-1 --force
+	#!/bin/sh
 
-lvrename /dev/vg/snap-current-home snap-old-home-1
-lvrename /dev/vg/snap-current-gentoo snap-old-gentoo-1
+	lvremove /dev/vg/snap-old-gentoo-1 --force
+	lvremove /dev/vg/snap-old-home-1 --force
 
-lvcreate -L 250M --snapshot -p r -n snap-current-home /dev/vg/home
-lvcreate -L 300M --snapshot -p r -n snap-current-gentoo /dev/vg/gentoo
-</blockquote>
+	lvrename /dev/vg/snap-current-home snap-old-home-1
+	lvrename /dev/vg/snap-current-gentoo snap-old-gentoo-1
+
+	lvcreate -L 250M --snapshot -p r -n snap-current-home /dev/vg/home
+	lvcreate -L 300M --snapshot -p r -n snap-current-gentoo /dev/vg/gentoo
 
 Das script löscht die alten Snapshots, benennt die aktuellen Snapshots um und erstellt neue Snapshots. Die Anzahl an Snapshots könnte noch erhöht werden, deswegen der Suffix -1.
 

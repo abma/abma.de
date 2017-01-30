@@ -9,7 +9,15 @@ date: 01-12-2008
 {% load markup %}
 {% filter markdown %}
 
-<p>Um Text auf der Konsole farbig zu machen eignet sich folgendes einfache Script:</p> <blockquote> #!/bin/sh<br /> red=$(tput setaf 1) normal=$(tput sgr0)<br /> WORD=&quot;suchwort&quot;<br /> cat protokolldatei.log |sed &quot;s/${WORD}/${red}${WORD}${normal}/g&quot; </blockquote> <p>Nützlich, wenn man Protokolldateien anschaut :)</p>
+Um Text auf der Konsole farbig zu machen eignet sich folgendes einfache Script:
+
+	#!/bin/sh
+	red=$(tput setaf 1) normal=$(tput sgr0)
+	WORD="suchwort"
+	cat protokolldatei.log |sed "s/${WORD}/${red}${WORD}${normal}/g"
+
+Nützlich, wenn man Protokolldateien anschaut :)
+
 
 {% endfilter %}
 {% endblock %}

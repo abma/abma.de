@@ -9,7 +9,58 @@ date: 24-11-2009
 {% load markup %}
 {% filter markdown %}
 
-<p>I've written a little bash-script for eximstats. This script runs eximstats so, that it creates a daly/weekly/monthly and yearly report :-)</p><p>This script doesn't create an index.html or so, but within a .htaccess &quot;Options +Indexes&quot; this should be no problem :-)</p><blockquote><p><code>#!/bin/sh<br /><br />STATSPATH=&quot;/path/to/exim/status/output&quot;<br />EXIMLOG=&quot;/var/log/exim/exim_*.log&quot;<br /><br />##end config<br />cd $STATSPATH<br /><br />DAY=`date +&quot;%u&quot;`<br />WEEK=`date +&quot;%W&quot;`<br />MONTH=`date +&quot;%m&quot;`<br />YEAR=`date +&quot;%Y&quot;`<br /><br />function report(){<br />&nbsp;&nbsp;&nbsp; OUTPUT=$1<br />&nbsp;&nbsp;&nbsp; MERGEPATTERN=$2<br />&nbsp;&nbsp;&nbsp; mkdir -p $OUTPUT<br />&nbsp;&nbsp;&nbsp; echo eximstats -html -charts -merge -chartdir $OUTPUT -chartrel $OUTPUT $MERGEPATTERN.html<br />&nbsp;&nbsp;&nbsp; eximstats -html -charts -merge -chartdir $OUTPUT -chartrel $OUTPUT $MERGEPATTERN.html &gt; $OUTPUT.html<br />}<br /><br />#create daily report<br />mkdir -p day$DAY<br />eximstats -html -charts -chartdir day$DAY -chartrel day$DAY $EXIMLOG &gt;day$DAY.html<br />#update weekly report<br />report week$MONTH-$WEEK day?<br />#update monthly report<br />report month$MONTH week??-??<br />#uptdate yearly report<br />report year$YEAR month??<br /></code></p></blockquote><p>The script is called from logrotate.</p><blockquote><p><code>/etc/logrotate.d/exim:</code></p><p><code>/var/log/exim/exim*.log {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; daily<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; missingok<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rotate 28<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; compress<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delaycompress<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; notifempty<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; create 640 mail mail<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sharedscripts<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prerotate<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /path/to/eximstats.sh<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; postrotate<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /etc/init.d/exim restart &gt; /dev/null<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; endscript<br />}</code><br />&nbsp;</p></blockquote>
+I've written a little bash-script for eximstats. This script runs eximstats so, that it creates a daly/weekly/monthly and yearly report :-)
+This script doesn't create an index.html or so, but within a .htaccess "Options +Indexes" this should be no problem :-)
+
+	#!/bin/sh
+
+	STATSPATH="/path/to/exim/status/output"
+	EXIMLOG="/var/log/exim/exim_*.log"
+
+	##end config
+	cd $STATSPATH
+
+	DAY=`date +"%u"`
+	WEEK=`date +"%W"`
+	MONTH=`date +"%m"`
+	YEAR=`date +"%Y"`
+
+	function report(){
+	    OUTPUT=$1
+	    MERGEPATTERN=$2
+	    mkdir -p $OUTPUT
+	    echo eximstats -html -charts -merge -chartdir $OUTPUT -chartrel $OUTPUT $MERGEPATTERN.html
+	    eximstats -html -charts -merge -chartdir $OUTPUT -chartrel $OUTPUT $MERGEPATTERN.html &gt; $OUTPUT.html
+	}
+
+	#create daily report
+	mkdir -p day$DAY
+	eximstats -html -charts -chartdir day$DAY -chartrel day$DAY $EXIMLOG &gt;day$DAY.html
+	#update weekly report
+	report week$MONTH-$WEEK day?
+	#update monthly report
+	report month$MONTH week??-??
+	#uptdate yearly report
+	report year$YEAR month??
+
+The script is called from logrotate.
+
+/etc/logrotate.d/exim:
+	/var/log/exim/exim*.log {
+	        daily
+	        missingok
+	        rotate 28
+	        compress
+	        delaycompress
+	        notifempty
+	        create 640 mail mail
+	        sharedscripts
+	        prerotate
+	                /path/to/eximstats.sh
+	        postrotate
+	                /etc/init.d/exim restart &gt; /dev/null
+	        endscript
+}
 
 {% endfilter %}
 {% endblock %}

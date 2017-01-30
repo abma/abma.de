@@ -8,8 +8,11 @@ date: 31-01-2007
 
 {% load markup %}
 {% filter markdown %}
+Wenn man unter Linux den Eventlog von Windows auslesen will, bietet sich das Perlscript "<a href="http://www.d-fence.be/">FCCU evtreader.pl</a>" an.  Mit z.B.
 
-<p>Wenn man unter Linux den Eventlog von Windows auslesen will, bietet sich das Perlscript &quot;<a href="http://www.d-fence.be/">FCCU evtreader.pl</a>&quot; an.  Mit z.B.</p> <blockquote> ./fccu.evtreader.pl /media/windows/WINDOWS/system32/config/AppEvent.Evt </blockquote> <p>zeigt es den Eventlog für Anwendungen an.</p>
+	./fccu.evtreader.pl /media/windows/WINDOWS/system32/config/AppEvent.Evt
+
+zeigt es den Eventlog für Anwendungen an.
 
 {% endfilter %}
 {% endblock %}

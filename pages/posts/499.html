@@ -11,17 +11,17 @@ date: 12-12-2016
 
 I had several issues setting up NTLM auth for apache using ntlm_auth and got errors like these:
 
-      Could not parse 'DOMAINgroup into separate domain/name parts!
-      Winbindd lookupname failed to resolve 'DOMAIN\group into a SID!
+	ould not parse 'DOMAINgroup into separate domain/name parts!
+	Winbindd lookupname failed to resolve 'DOMAIN\group into a SID!
 
 in apache config i used this config strings:
 
-      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\group'"
-      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\\\\group'"
+	NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\group'"
+	NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of='DOMAIN\\\\group'"
 
 The only problem was/is escaping, this config worked for me:
 
-      NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of=DOMAIN\\\\group"
+	NTLMAuthHelper "/usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp --require-membership-of=DOMAIN\\\\group"
 
 
 Note: no single quotes arround the group and 4 backslashes!

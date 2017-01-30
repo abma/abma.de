@@ -8,8 +8,10 @@ date: 09-02-2007
 
 {% load markup %}
 {% filter markdown %}
+Meine Infrarot-Fernbedienung für den PC hat ein Update auf Bluetooth erfahren. Beim einrichten bin ich auf folgenden Fehler von hidd (tool aus dem Bluez-Package) gestoßen:
 
-<p>Meine Infrarot-Fernbedienung für den PC hat ein Update auf Bluetooth erfahren. Beim einrichten bin ich auf folgenden Fehler von hidd (tool aus dem Bluez-Package) gestoßen:</p><blockquote><p>hidd[8755]: HID create error 2 (No such file or directory)</p></blockquote><p>Aus dieser Fehlermeldung wird man leider nicht schlau, im Endeffekt hat aber nur das Pairing der beiden Geräte gefehlt. Nach einem hidd --connect hat dann aber alles gut funktioniert. Gut zu wissen, dass ich jetzt meinen Rechner aus 150m Entfernung fernbedienen könnte :-)</p>
+	hidd[8755]: HID create error 2 (No such file or directory)
 
+Aus dieser Fehlermeldung wird man leider nicht schlau, im Endeffekt hat aber nur das Pairing der beiden Geräte gefehlt. Nach einem hidd --connect hat dann aber alles gut funktioniert. Gut zu wissen, dass ich jetzt meinen Rechner aus 150m Entfernung fernbedienen könnte :-)
 {% endfilter %}
 {% endblock %}

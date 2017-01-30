@@ -9,7 +9,11 @@ date: 31-05-2007
 {% load markup %}
 {% filter markdown %}
 
-<p>Die beste Qualität erreichte ich mit ffmpeg und 2-pass:</p><blockquote>ffmpeg -i datei.flv -b 900000 -f mpeg -y datei.flv.mpg -pass 1 ffmpeg -i datei.flv -b 900000 -f mpeg -y datei.flv.mpg -pass 2</blockquote><p>Mit dem mencoder wurden die Dateien ohne zusätzlichen codecs leider nicht im Windows Mediaplayer abgespielt, da dieser jedoch auch den ffmpeg als Backend verwendet, kann man auch dieses Tool auch direkt verwenden. Den Fehler, dass die Dauer des Clips falsch angezeigt wird konnte ich nicht beheben, da die Clips jedoch fehlerfrei abgespielt wurden fand ich das nicht weiter störend.</p>
+Die beste Qualität erreichte ich mit ffmpeg und 2-pass:
+
+	ffmpeg -i datei.flv -b 900000 -f mpeg -y datei.flv.mpg -pass 1 ffmpeg -i datei.flv -b 900000 -f mpeg -y datei.flv.mpg -pass 2
+
+Mit dem mencoder wurden die Dateien ohne zusätzlichen codecs leider nicht im Windows Mediaplayer abgespielt, da dieser jedoch auch den ffmpeg als Backend verwendet, kann man auch dieses Tool auch direkt verwenden. Den Fehler, dass die Dauer des Clips falsch angezeigt wird konnte ich nicht beheben, da die Clips jedoch fehlerfrei abgespielt wurden fand ich das nicht weiter störend.
 
 {% endfilter %}
 {% endblock %}

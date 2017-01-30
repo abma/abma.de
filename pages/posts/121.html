@@ -15,25 +15,24 @@ mplayer
 lame
 
 ~/wmatomp3.sh:
-<blockquote>#!/bin/bash
+	#!/bin/bash
 
-if ! ls *.wma ; then
-        exit 0
-fi
-#remove spaces
-for i in *.wma; do mv "$i" `echo $i | tr ' ' '_'`; done
+	if ! ls *.wma ; then
+		exit 0
+	fi
+	#remove spaces
+	for i in *.wma; do mv "$i" `echo $i | tr ' ' '_'`; done
 
-#make lowercase
-for i in *.[Ww][Mm][Aa]; do mv "$i" `echo $i | tr '[A-Z]' '[a-z]'`; done
+	#make lowercase
+	for i in *.[Ww][Mm][Aa]; do mv "$i" `echo $i | tr '[A-Z]' '[a-z]'`; done
 
-#dump with mplayer to wav and encode with lame
-for i in *.wma ; do
-        echo "[`date +%H:%M:%S`] Converting $i"
-        mplayer -really-quiet -af resample=44100 -ao pcm:file=/dev/stdout $i |lame -m s --quiet - $i.mp3 && \
-        mv "$i".mp3 "`basename "$i" .wma`.mp3" && \
-        mv "$i" /var/tmp || exit -1
-done
-</blockquote>
+	#dump with mplayer to wav and encode with lame
+	for i in *.wma ; do
+		echo "[`date +%H:%M:%S`] Converting $i"
+		mplayer -really-quiet -af resample=44100 -ao pcm:file=/dev/stdout $i |lame -m s --quiet - $i.mp3 && \
+		mv "$i".mp3 "`basename "$i" .wma`.mp3" && \
+		mv "$i" /var/tmp || exit -1
+	done
 
 make the file executable with chmod +x ~/wmatomp3.sh
 

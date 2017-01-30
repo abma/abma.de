@@ -9,7 +9,15 @@ date: 11-02-2010
 {% load markup %}
 {% filter markdown %}
 
-<p>With <a href="http://www.ntfs-3g.org">ntfs-3g.secaudit</a> it is possible to backup and restore file permissions of a NTFS-Filesystem:</p><blockquote><p>ntfs-3g.secaudit -b /dev/mapper/loop1p2 &gt; sec.data</p> </blockquote><p>and to restore:</p><blockquote><p>ntfs-3g.secaudit -se /dev/mapper/loop1p2 sec.data</p></blockquote><p>This makes it possible to backup a complete NTFS-volume with rsync/tar/... and the ntfs-acls.</p>
+With <a href="http://www.ntfs-3g.org">ntfs-3g.secaudit</a> it is possible to backup and restore file permissions of a NTFS-Filesystem:
+
+	ntfs-3g.secaudit -b /dev/mapper/loop1p2 &gt; sec.data
+
+and to restore:
+
+	ntfs-3g.secaudit -se /dev/mapper/loop1p2 sec.data
+
+This makes it possible to backup a complete NTFS-volume with rsync/tar/... and the ntfs-acls.
 
 {% endfilter %}
 {% endblock %}

@@ -10,11 +10,13 @@ date: 17-06-2007
 {% filter markdown %}
 
 Standard NTFS-Rechte setzen: (z.B. wenn man unter linux windows von partition a auf partition b kopiert hat)
-<blockquote>secedit /configure /cfg “c:\windows\security\templates\setup security.inf” /db waisaw.sdb /verbose</blockquote>
+
+	secedit /configure /cfg “c:\windows\security\templates\setup security.inf” /db waisaw.sdb /verbose
 
 
 Wiederherstellungskonsole auf festplatte installieren:
-<blockquote>d:\i386\winnt32.exe /cmdcons</blockquote>
+
+	d:\i386\winnt32.exe /cmdcons
 
 {% endfilter %}
 {% endblock %}

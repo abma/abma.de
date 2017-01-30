@@ -13,12 +13,13 @@ Wenn man den UMTS-Stick MF190 von Huwei an eine Fritzbox anschliesst, wird der S
 Um den UMTS-Stick Huwei MF190  (in meinem Fall von O2) an einer Fritzbox betreiben zu können, muss man die Autorunfunktion des Sticks deaktivieren.  
 Der Stick emuliert ein CDROM-Laufwerk, welches auf dem die Treiber liegen. Um auf das Modem zugreifen zu können, muss erst ein Umschaltbefehl (unter Linux macht das der modem-manager / udev) an den Stick gesendet werden. Man kann dieses umstellen auch permanent machen, man muss einfach den AT-Befehl 
 
-    AT^CDRUN=8
-    Open autorun state result(0:FAIL 1:SUCCESS):1
+	AT^CDRUN=8
+	Open autorun state result(0:FAIL 1:SUCCESS):1
+
 und um das wieder rückgänig zu machen:
 
-    AT^CDRUN=9
-    Close autorun state result(0:FAIL 1:SUCCESS):1
+	AT^CDRUN=9
+	Close autorun state result(0:FAIL 1:SUCCESS):1
 
 mit minicom an den port /dev/ttyUSB2 senden, bzw. unter Windows vermutlich den Port COM2. Wenn man das erfolgreich gemacht hat, wird der UMTS-Stick auch an der Fritzbox erkannt.
 

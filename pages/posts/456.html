@@ -8,8 +8,26 @@ date: 03-02-2010
 
 {% load markup %}
 {% filter markdown %}
+Um unter Ubuntu aus einem Quellcode-Paket ein .deb datei zu erstellen gibt es das tool checkinstall:
 
-<p>Um unter Ubuntu aus einem Quellcode-Paket ein .deb datei zu erstellen gibt es das tool checkinstall:</p><blockquote><p>apt-get install checkinstall</p></blockquote><p>Um aus dem Packet ein debian packet zu bauen, muss man es erst entpacken:</p><blockquote><p>tar xifz dovecot-1.2.10.tar.gz</p></blockquote><p>dann mit</p><blockquote><p>./configure&nbsp; --prefix=/usr --sysconfdir=/etc/dovecot</p></blockquote><p>konfigurieren. Dann noch</p><blockquote><p>checkinstall</p></blockquote><p>ausführen. Um mehrere provides anzugeben verwendet man das plus-zeichen:</p><blockquote><p>provides dovecot-common+dovecot-imapd+dovecot-pop3d</p></blockquote><p>Nachdem man alles konfiguriert hat wird das Paket gebaut und installiert. Das erstellte packet dovecot_1.2.10-1_amd64.deb am besten noch sichern.</p><p>&nbsp;</p>
+	apt-get install checkinstall
 
+Um aus dem Packet ein debian packet zu bauen, muss man es erst entpacken:
+
+	tar xifz dovecot-1.2.10.tar.gz
+
+dann mit
+
+	./configure  --prefix=/usr --sysconfdir=/etc/dovecot
+
+konfigurieren. Dann noch
+
+	checkinstall
+
+ausführen. Um mehrere provides anzugeben verwendet man das plus-zeichen:
+
+	provides dovecot-common+dovecot-imapd+dovecot-pop3d
+
+Nachdem man alles konfiguriert hat wird das Paket gebaut und installiert. Das erstellte packet dovecot_1.2.10-1_amd64.deb am besten noch sichern.
 {% endfilter %}
 {% endblock %}

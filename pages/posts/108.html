@@ -13,11 +13,11 @@ Um eine ntfs-partition über das netz zu clonen eignen sich die Tools netcat und
 
 auf dem zielpc (ip 192.168.0.50): (um in eine datei zu speichern)
 
-<blockquote>netcat -l -p 9000 > spock2.ntfsclone</blockquote>
+	netcat -l -p 9000 > spock2.ntfsclone
 
 auf dem quellpc:
 
-<blockquote>ntfsclone -s -o - /dev/hda1 | netcat 192.168.0.50 9000</blockquote>
+	ntfsclone -s -o - /dev/hda1 | netcat 192.168.0.50 9000
 
 {% endfilter %}
 {% endblock %}

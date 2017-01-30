@@ -11,19 +11,17 @@ date: 07-01-2013
 
 To change the table type for all tables on a mysql database use this code snippet:
 
-<?php
+	<?php
 	mysql_connect('localhost','root', 'password');
-    $dbs = mysql_query("show databases");
+	$dbs = mysql_query("show databases");
 	while($db = mysql_fetch_row($dbs))  {
-	if ($db[0]=="mysql") continue; //skip system table
-	mysql_select_db($db[0]);
-    $rs = mysql_query("SHOW tables");
-    while($row = mysql_fetch_array($rs))
-    {
-        mysql_query("ALTER TABLE ".$row[0]." ENGINE=MYISAM");
-    }
+		if ($db[0]=="mysql") continue; //skip system table
+		mysql_select_db($db[0]);
+		$rs = mysql_query("SHOW tables");
+		while($row = mysql_fetch_array($rs)){
+			mysql_query("ALTER TABLE ".$row[0]." ENGINE=MYISAM");
+		}
 	}
-?>
 
 {% endfilter %}
 {% endblock %}

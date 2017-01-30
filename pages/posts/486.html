@@ -9,11 +9,11 @@ date: 24-05-2012
 {% load markup %}
 {% filter markdown %}
 
-if "%PROCESSOR_ARCHITECTURE%" == "x86" (
-       echo "System is 32 bit"
-   ) else (
-      echo "System is 64 bit"
-   )
+	if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+		echo "System is 32 bit"
+	) else (
+		echo "System is 64 bit"
+	)
 
 There are some other solutions, too, but this seems to be the most efficient. This way only works, if you are using the 64 bit cmd.exe:
 http://stackoverflow.com/questions/1738985/why-processor-architecture-always-returns-x86-instead-of-amd64
