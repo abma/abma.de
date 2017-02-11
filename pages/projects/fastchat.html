@@ -9,7 +9,23 @@ date: 10-01-2008
 {% load markup %}
 {% filter markdown %}
 
-<p>FastChat is a small and easy to use chat program in the local network. It works with the udp-protocol.  if you find bugs/you have suggestions send an email to  matthias at abma dot de  (sorry for my bad english ;-)</p><h2><strong>news</strong></h2><p>Download  FastChat Downloads  Documentation Gentoo  I've made a simple <a href="http://fastchat.svn.sourceforge.net/viewvc/*checkout*/fastchat/trunk/fc2/fastchat-0.16.9999.ebuild">ebuild</a>. You only have to set up a PORTDIR_OVERLAY and copy the ebuild into net-im/fastchat. Then type 'ebuild fastchat-0.16.9999.ebuild digest &amp;&amp; emerge fastchat'. (Be careful, then your computer could explode, i can't give warranty because it's free :-)</p><h2>Screenshots</h2><p>Here a small screenshot:  <a href="http://abma.de/images/258"><img src="/sites/files/images/fastchat_3.preview.png" alt="" /></a> (Version 17, compiled at 02.03.2004, 02:10)</p><h2>Links</h2>  <p><a href="http://sourceforge.net/projects/fastchat/">FastChat Project Site</a></p><p><a href="http://repchat.sf.net">RepChat</a></p>
+FastChat is a small and easy to use chat program in the local network. It works with the udp-protocol.  if you find bugs/you have suggestions send an email to  matthias at abma dot de  (sorry for my bad english ;-)
+
+## news
+Download  FastChat Downloads  Documentation Gentoo  I've made a simple <a href="http://fastchat.svn.sourceforge.net/viewvc/*checkout*/fastchat/trunk/fc2/fastchat-0.16.9999.ebuild">ebuild</a>. You only have to set up a PORTDIR_OVERLAY and copy the ebuild into net-im/fastchat. Then type 'ebuild fastchat-0.16.9999.ebuild digest && emerge fastchat'. (Be careful, then your computer could explode, i can't give warranty because it's free :-)
+
+## Screenshots
+
+Here a small screenshot:
+
+<img src="{% static '/images/fastchat_3.png' %}" alt="" />
+
+(Version 17, compiled at 02.03.2004, 02:10)
+
+## Links
+
+<a href="http://sourceforge.net/projects/fastchat/">FastChat Project Site</a></p><p><a href="http://repchat.sf.net">RepChat</a>
+
 
 {% endfilter %}
 {% endblock %}
