@@ -37,6 +37,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="{% if_current_page '/index.html' 'active' '' %}"><a href="{% url '/index.html' %}">Home</a></li>
+            <li class="{% if_current_page 'projects/index.html' 'active' '' %}"><a href="{% url '/projects/index.html' %}">Projects</a></li>
             <li class="{% if_current_page '/contact.html' 'active' '' %}"><a href="{% url '/contact.html' %}">Contact</a></li>
 <!--
             <li class="dropdown">
