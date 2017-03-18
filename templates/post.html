@@ -13,21 +13,21 @@
 <nav>
 	<span class="prev">
 		{% if prevPost %}
-			<a href='{{ ROOT_URL }}/{{ prevPost.path }}'>
+			<a href='/{{ prevPost.path }}'>
 				&laquo; previous
 			</a>
 		{% else %}
 			First post
 		{% endif %}
 	</span>
-	
+<!--
 	<span>
 		<a href="/">Home</a>
 	</span>
-
+-->
 	<span class="next">
 		{% if nextPost %}
-			<a href='{{ ROOT_URL }}/{{ nextPost.path }}'>
+			<a href='/{{ nextPost.path }}'>
 				next &raquo;
 			</a>
 		{% else %}
