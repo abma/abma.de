@@ -37,8 +37,8 @@
 </nav>
 <article>
 	<header>
-		<h1>{{ title }}</h1>
-		<h5><time pubdate="pubdate">{{ date|date:"F j, Y" }}</time> by <span class="author">{{ author }}</address></h5>
+		<h2>{{ title }}</h2>
+		<h5><time datetime="{{date|date:"Y-m-d"}}">{{ date|date:"F j, Y" }}</time> by <span class="author">{{ author }}</span></h5>
 	</header>
 		{% block body %}{% endblock %}
 	<footer>
