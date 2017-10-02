@@ -2,5 +2,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: sitemap.xml
+Sitemap: https://abma.de/sitemap.xml
 {% endverbatim %}
